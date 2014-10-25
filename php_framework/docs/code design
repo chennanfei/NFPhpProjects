@@ -1,0 +1,2 @@
+the whole architecture is MVC - model, view and controller.
+all controller inherit from a same base one.
