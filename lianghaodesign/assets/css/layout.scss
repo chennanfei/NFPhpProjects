@@ -1,0 +1,60 @@
+* {
+    @include box-sizing();
+}
+
+body {
+    font-size: 13px;
+    line-height: 19px;
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    margin: 8px 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+// layout
+.lh-background-primary {
+    background-color: #EAEAEA;
+}
+
+.lh-header-content, .lh-header-content-small {
+    background-color: $primary-color;
+    
+    .lh-header-text {
+        color: #999999; 
+    }
+}
+
+.lh-header-content {
+    padding: 24px 12px;
+
+    .lh-header-text {
+        font-size: 28px;
+    }
+}
+
+.lh-header-content-small {
+    padding: 12px;
+
+    .lh-header-text {
+        font-size: 16px;
+    }
+    
+    a {
+        color: #999999;
+        
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.lh-content {
+    margin: auto;
+    width: 90%;
+}

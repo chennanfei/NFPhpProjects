@@ -1,0 +1,24 @@
+$border-color-base: #DDDDDD;
+$primary-color: #000000;
+
+@mixin box-sizing($val:border-box) {
+    box-sizing: $val;
+    -webkit-box-sizing: $val;
+    -moz-box-sizing: $val;
+}
+
+@mixin border-radius($val:4px) {
+    border-radius: $val;
+    -webkit-border-radius: $val;
+    -moz-border-radius: $val;
+}
+
+@mixin button($bkColor, $fontColor, $hoverColor) {
+    background-color: $bkColor;
+    border-color: $bkColor;
+    color: $fontColor;
+    
+    &:hover {
+        background-color: $hoverColor;
+    }
+}

@@ -1,0 +1,23 @@
+.lh-box-signin {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin: -120px auto 0 auto;
+    width: 360px;
+}
+
+.lh-box-pwd {
+    width: 460px;
+}
+
+.lh-box-error {
+    margin: 100px auto;
+    width: 360px;
+}
+
+.lh-form {
+    .lh-input-text {
+        width: 100%;
+    }
+}

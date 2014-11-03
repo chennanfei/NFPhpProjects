@@ -1,0 +1,119 @@
+// common widgets
+// row
+.lh-row {
+    &:before, &:after {
+        display: table;
+        content: '';
+    }
+    
+    &:after {
+        clear: both;
+    }
+    
+    .lh-col3, .lh-col9, .lh-col5 {
+        float: left;
+        margin-right: 2%;
+    }
+    
+    .lh-col3 {
+        width: 23.5%;
+    }
+    
+    .lh-col3-offset {
+        margin-left: 25.5%;
+    }
+    
+    .lh-col5 {
+        width: 49%;
+    }
+    
+    .lh-col9 {
+        width: 74.5%
+    }
+    
+    .lh-col-last {
+        margin-right: 0;
+    }
+}
+
+// box
+.lh-box {
+    .lh-box-inner {
+        background-color: #FFFFFF;
+        padding: 18px 14px;
+        
+        @include border-radius();
+    }
+}
+
+// input
+.lh-input {
+    margin-bottom: 10px;
+    
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.lh-input-text {
+    border: 1px solid $border-color-base;
+    font-size: 13px;
+    height: 29px;
+    padding: 5px 7px;
+    
+    @include border-radius(3px);
+}
+
+.lh-input-label {
+    line-height: 29px;
+}
+
+// button
+.lh-button {
+    border-width: 1px;
+    border-style: solid;
+    cursor: pointer;
+    line-height: 19px;
+    padding: 5px 10px;
+    
+    @include border-radius(3px);
+    @include button(#EAEAEA, #333333, #EEEEEE);
+    
+    &.lh-button-primary {
+        @include button($primary-color, #FFFFFF, #333333);
+    }
+}
+
+// alert
+.lh-alert {
+    padding: 10px 0;
+    
+    &.lh-alert-error {
+        color: red;
+    }
+    
+    &.lh-alert-success {
+        color: green;
+    }
+}
+
+// menu
+.lh-menu {
+    margin: 0;
+    padding: 0;
+    
+    .lh-menu-item {
+        list-style-type: none;
+    }
+    
+    a.lh-menu-item-link {
+        color: #333333;
+        display: block;
+        padding: 8px;
+        
+        &:hover {
+            background-color: black;
+            color: white;
+        }
+    }
+}
