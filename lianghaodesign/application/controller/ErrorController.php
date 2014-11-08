@@ -7,28 +7,19 @@ class ErrorController extends BaseController {
     }
     
     public function indexAction() {
-        $this->gotoAdminErrorPage();
+        try {
+            $this->gotoAdminErrorPage();
+        } catch (Exception $e) {
+            print_r($e);   
+        }
     }
     
     private function gotoAdminErrorPage() {
-        $message = '';
-        $title = '';
-        
-        if ($this->request->getParameter('code') == '404') {
-            $message = 'Page not found. Please check your url.';
-            $title = 'Page not found';
-        } else {
-            $message = 'Something wrong happened. Please try again later.';
-            $title = 'Internal server error';
-        }
-        
-        $url = NFUtil::getUrl($this->session->isRecognizedUser() ? '/admin/home' : '/admin');
-        $this->displayPage('/admin/error', array(
-            'message' => $message,
-            'homeUrl' => $url,
-            'page' => 'error',
-            'title' => $title
+        $this->setPageDataFromHelper('adminError', array(
+            'code' => $this->request->getParameter('code'),
+            'isRecognizedUser' => $this->session->isRecognizedUser()
         ));
+        $this->displayPage('/admin/error');
     }
 }
 ?>

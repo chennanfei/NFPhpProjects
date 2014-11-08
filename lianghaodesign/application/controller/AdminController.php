@@ -7,7 +7,6 @@ class AdminController extends BaseController {
         parent::initialize();
         
         $this->setPageTemplateRoot('/pages/admin');
-        $this->secureActions = array('account', 'home');
         
         // check if redirection is needed
         $redirectUrl = $this->getRedirectUrl();
@@ -16,7 +15,7 @@ class AdminController extends BaseController {
             return;
         }
         
-        $this->setPageDataFromHelper('menuLinks');
+        $this->setPageDataFromHelper('menuUrls');
     }
     
     private function getRedirectUrl() {
@@ -26,18 +25,15 @@ class AdminController extends BaseController {
         if ($this->getController() == 'error') {
             return null;
         } elseif ($isSecureAction && !$isRecognizedUser) {
-            return NFUtil::getUrl('/admin/signin');
+            return $this->getData('signInUrl');
         } elseif (!$isSecureAction && $isRecognizedUser) {
-            return NFUtil::getUrl('/admin/home');
+            return $this->getData('homeUrl');
         } else {
             return null;
         }
     }
     
     public function accountAction() {
-        $message = '';
-        $messageType = '';
-        
         if ($this->request->isPost() && $this->request->getParameter('action') == 'updatePwd') {
             try {
                 (new UserService)->changePassword(
@@ -46,20 +42,15 @@ class AdminController extends BaseController {
                     $this->request->getParameter('newPwd')
                 );
                 
-                $message = 'Successfully updated your password!';
-                $messageType = 'success';
+                $this->setPageDataFromHelper('accountPageData', array('isUpdated' => true));
             } catch (Exception $e) {
-                $message = 'Failed to update your password. Password consists of 6~10 characters. Check your inputs.';
-                $messageType = 'error';
+                $this->setPageDataFromHelper('accountPageData', array('isUpdated' => false));
             }
+        } else {
+            $this->setPageDataFromHelper('accountPageData');
         }
 
-        $this->displayPage('account', array(
-            'message' => $message,
-            'messageType' => $messageType,
-            'pageContentTitle' => 'Change your password',
-            'title' => 'Change password'
-        ));
+        $this->displayPage('account');
     }
     
     public function homeAction() {
@@ -67,12 +58,8 @@ class AdminController extends BaseController {
     }
     
     public function indexAction() {
-        $this->displayPage('gateway', array(
-            signInUrl => NFUtil::getUrl('/admin/signin'),
-            title => 'Sign in',
-            page => 'signIn',
-            pageContentTitle => 'Sign in now',
-        ));
+        $this->setPageDataFromHelper('gatewayPageData');
+        $this->displayPage('gateway');
     }
     
     public function signinAction() {
@@ -85,9 +72,9 @@ class AdminController extends BaseController {
         
         try {
             (new UserService)->authenticate($userID, $password);
-            $this->request->redirect(NFUtil::getUrl('/admin/home'));
+            $this->request->redirect($this->getData('homeUrl'));
         } catch(Exception $e) {
-            $this->smarty->setPageData(array(
+            $this->setPageData(array(
                 message => 'The user ID and password does not match.',
                 messageType => 'error',
                 userID => $userID

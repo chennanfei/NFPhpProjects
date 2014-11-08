@@ -47,7 +47,7 @@ class NFController {
         return $this->controller;
     }
     
-    protected function getData($key) {
+    protected function getData($key, array $args = null) {
         if (!$this->isDataHelperInitialized) {
             // initialize the data helper when this API is firstly called.
             $this->isDataHelperInitialized = true;
@@ -62,16 +62,7 @@ class NFController {
             $this->dataHelper = new $helperClass($this->action);
         }
 
-        if (!isset($this->dataHelper) || empty($key)) {
-            return null;
-        }
-        
-        $method = 'get' . ucfirst($key);
-        if (method_exists($this->dataHelper, $method)) {
-            return $this->dataHelper->$method();
-        }
-        
-        return null;
+        return isset($this->dataHelper) ? $this->dataHelper->getData($key, $args) : null;
     }
     
     protected function setPageData(array $data) {
@@ -79,8 +70,8 @@ class NFController {
     }
     
     /** $key: the getter's name of DataHelper, e.g. getAssets, $key should be 'assets' */
-    protected function setPageDataFromHelper($key) {
-        $data = $this->getData($key);
+    protected function setPageDataFromHelper($key, array $args = null) {
+        $data = $this->getData($key, $args);
         if (isset($data) && is_array($data)) {
             $this->setPageData($data);
         }
