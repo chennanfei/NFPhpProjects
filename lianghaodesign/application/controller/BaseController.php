@@ -1,26 +1,21 @@
 <?php
-require_once 'Scorpio/Utility/NFUtil.php';
-require_once 'Scorpio/Context/NFController.php';
+require_once 'Scorpion/Utility/NFUtil.php';
+require_once 'Scorpion/Context/NFController.php';
+require_once 'utility/Constants.php';
 
 class BaseController extends NFController {
+    protected $secureActions = array();
+    
     public function initialize() {
-        $this->smarty->setPageData(array(
-            page => 'home',
-            title => 'Lianghao'
-        ));
-        $this->initPageAssets();
+        $this->setPageData(array('page' => 'home', 'title' => 'Lianghao'));
+        $this->setPageDataFromHelper('assets');
     }
     
-    private function initPageAssets() {
-        $this->smarty->setPageData(array(
-            styles => array(NFUtil::getStylePath('page.css')),
-            
-            // ThinkMVC has a bug that the modules depended by 'first' module are not downloaded
-            // a solution is, separate thinkmvc to two parts: core and mvc. insert core part into page
-            jqJS => NFUtil::getScriptUrl('lib/jquery-1.11.0.js'),
-            libJS => NFUtil::getScriptUrl('lib/thinkmvc.js'),
-            pageJS => NFUtil::getScriptUrl('page.js')
-        ));
+    protected function isSecureAction() {
+        if (empty($this->secureActions)) {
+            return false;
+        }
+        return in_array($this->getAction(), $this->secureActions, true);
     }
 }
 ?>

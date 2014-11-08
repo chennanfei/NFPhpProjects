@@ -2,7 +2,15 @@
 require_once 'controller/BaseController.php';
 
 class ErrorController extends BaseController {
+    public function initialize() {
+        $this->setPageDataFromHelper('assets');
+    }
+    
     public function indexAction() {
+        $this->gotoAdminErrorPage();
+    }
+    
+    private function gotoAdminErrorPage() {
         $message = '';
         $title = '';
         
@@ -14,13 +22,13 @@ class ErrorController extends BaseController {
             $title = 'Internal server error';
         }
         
-        $url = NFUtil::getUrl($this->session->isRecognizedUser() ? '/home' : '/');
-        $this->smarty->setPageData(array(
-            message => $message,
-            homeUrl => $url,
-            page => 'error',
-            title => $title
-        ))->displayPage('error');
+        $url = NFUtil::getUrl($this->session->isRecognizedUser() ? '/admin/home' : '/admin');
+        $this->displayPage('/admin/error', array(
+            'message' => $message,
+            'homeUrl' => $url,
+            'page' => 'error',
+            'title' => $title
+        ));
     }
 }
 ?>

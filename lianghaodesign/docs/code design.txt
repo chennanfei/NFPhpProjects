@@ -1,0 +1,10 @@
+the whole architecture is MVC - model, view and controller.
+all controller inherit from a same base one.
+
+two modes: debug and production. in debug mode, load the debug assets or else load prod assets.
+
+
+init databse:
+    create database lianghao;
+    create table user(id varchar(20) not null primary key, password varchar(10) not null, login_time datetime not null);
+    insert into user(id,password,login_time) values('lianghaodesign','123456','2014-10-31 00:00:00');

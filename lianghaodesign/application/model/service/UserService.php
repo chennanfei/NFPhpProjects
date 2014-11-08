@@ -1,14 +1,14 @@
 <?php
-require_once 'Scorpio/Utility/NFSession.php';
-require_once 'Scorpio/DB/NFDBService.php';
+require_once 'Scorpion/Utility/NFSession.php';
 require_once 'utility/Constants.php';
 require_once 'model/entity/User.php';
+require_once 'model/service/DBService.php';
 
 class UserService {
     private $dbService;
     
     public function __construct() {
-        $this->dbService = new NFDBService;
+        $this->dbService = new DBService;
     }
     
     /* verify user and update status */

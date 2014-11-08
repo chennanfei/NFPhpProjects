@@ -16,6 +16,6 @@ date_default_timezone_set('Asia/Shanghai');
 // open session so that it can be updated.
 session_start();
 
-require_once 'Scorpio/Context/NFApplicationContext.php';
+require_once 'Scorpion/Context/NFApplicationContext.php';
 (new NFApplicationContext)->run();
 ?>

@@ -1,0 +1,32 @@
+Code structure:
+    application
+        controller
+            BaseController.php
+            ErrorController.php
+
+    assets
+        css
+            aggregator.scss
+            settings.scss
+        js
+            lib
+                jquery.js
+                thinkmvc.js
+            page.js
+        images
+
+    lib
+        Doctrine
+        Scorpio
+        smarty
+
+    view
+        templates
+            features
+            layouts
+                error.tpl
+                index.tpl
+        templates_c
+            cache_c
+
+    index.php

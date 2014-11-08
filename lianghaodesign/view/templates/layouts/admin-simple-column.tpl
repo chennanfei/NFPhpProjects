@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>{$title} - Lianghao console</title>
-    {include file="features/assets.tpl"}
+    {include file="features/shared/assets.tpl"}
 </head>
 <body class="lh-background-primary" data-page="{$page}">
     <div class="lh-header">

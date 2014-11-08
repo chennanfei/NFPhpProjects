@@ -13,16 +13,19 @@ class NFSmartyHelper {
         $this->smarty->right_delimiter = "}";
         $this->smarty->compile_dir = SITE_ROOT_PATH . '/view/templates_c';
         $this->smarty->cache_dir = SITE_ROOT_PATH . '/view/templates_c/cache_c';
-        $this->smarty->template_dir = SITE_ROOT_PATH . '/view/templates';
+        $this->smarty->template_dir = SITE_ROOT_PATH . self::TEMPLATES_ROOT;
     }
     
     public function displayPage($page) {
-        if (isset($page)) {
-            $this->smarty->display(SITE_ROOT_PATH . self::TEMPLATES_ROOT . '/' . $page . self::TEMPLATE_SUFFIX);
+        if (!empty($page)) {
+            if ($page[0] != '/') {
+                $page = '/' . $page;
+            }
+            $this->smarty->display(SITE_ROOT_PATH . self::TEMPLATES_ROOT . $page . self::TEMPLATE_SUFFIX);
         }
     }
     
-    public function setPageData($data) {
+    public function setPageData(array $data) {
         if (empty($data)) {
             return $this;
         }

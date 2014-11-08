@@ -1,7 +1,7 @@
-{extends file="layouts/simple-column.tpl"}
+{extends file="layouts/admin-simple-column.tpl"}
 
 {block name="top"}
-{include file="features/header-small.tpl"}
+{include file="features/admin/header-small.tpl"}
 {/block}
 
 {block name="center"}

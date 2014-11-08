@@ -1,5 +1,5 @@
 <?php
-require_once 'Scorpio/Utility/NFConstants.php';
+require_once 'Scorpion/Utility/NFConstants.php';
 require_once 'Doctrine/ORM/Tools/Setup.php';
 require_once 'Doctrine/ORM/EntityManager.php';
 require_once 'Doctrine/Common/EventManager.php';
@@ -26,14 +26,7 @@ class NFDBService {
         if (!self::$connectionConfig) {
             Setup::registerAutoloadPEAR();
             
-            self::$connectionConfig = array(
-                dbname => 'lianghao',
-                driver => 'pdo_mysql',
-                host => 'localhost',
-                password => 'eric1980',
-                user => 'root'
-            );
-            
+            self::$connectionConfig = $this->getConfig();
             self::$annotationConfig = Setup::createAnnotationMetadataConfiguration(
                 array(APPLICATION_ROOT_PATH . '/model/entity'), true);
         }
@@ -41,10 +34,13 @@ class NFDBService {
         $connection = DriverManager::getConnection(self::$connectionConfig, self::$annotationConfig);
         $this->entityManager = EntityManager::create($connection, self::$annotationConfig);
     }
-    
 
     public function __destruct() {
         $this->entityManager->close();
+    }
+    
+    protected function getConfig() {
+        return null;
     }
     
     /* http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html */
