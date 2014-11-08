@@ -10,7 +10,7 @@
         clear: both;
     }
     
-    .lh-col3, .lh-col9, .lh-col5 {
+    .lh-col3, .lh-col4, .lh-col6, .lh-col8, .lh-col9 {
         float: left;
         margin-right: 2%;
     }
@@ -23,12 +23,24 @@
         margin-left: 25.5%;
     }
     
-    .lh-col5 {
+    .lh-col4 {
+        width: 32%;
+    }
+    
+    .lh-col4-offset {
+        margin-left: 34%;
+    }
+    
+    .lh-col6 {
         width: 49%;
     }
     
+    .lh-col8 {
+        width: 66%;
+    }
+    
     .lh-col9 {
-        width: 74.5%
+        width: 74.5%;
     }
     
     .lh-col-last {
@@ -115,5 +127,16 @@
             background-color: black;
             color: white;
         }
+    }
+}
+
+// form
+.lh-form {
+    .lh-input-label {
+        text-align: right;
+    }
+    
+    .lh-input-text {
+        width: 100%;
     }
 }

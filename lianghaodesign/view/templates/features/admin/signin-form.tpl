@@ -1,4 +1,4 @@
-<form class="lh-form" action="{$signInUrl}" method="post">
+<form id="userAuthForm" class="lh-form" action="{$signInUrl}" method="post">
     <div class="lh-row lh-input">
         <div class="lh-col3 lh-input-label">User ID:</div>
         <div class="lh-col9 lh-col-last">

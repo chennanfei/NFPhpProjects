@@ -9,10 +9,10 @@ class NFController {
     private $dataHelpr;
     private $isDataHelperInitialized = false;
     private $pageRoot = '/pages';
+    private $smarty;
 
     protected $request;
     protected $session;
-    protected $smarty;
     
     public function __construct($controller, $action) {
         $this->action = $action;
@@ -27,6 +27,22 @@ class NFController {
         }
     }
     
+    /** create data helper for the controller */
+    private function createDataHelper() {
+        // initialize the data helper when this API is firstly called.
+        $this->isDataHelperInitialized = true;
+
+        $helperClass = ucfirst($this->controller) . 'DataHelper';
+        $helperClassPath = APPLICATION_ROOT_PATH . "/data-helper/$helperClass.php";
+        if (!file_exists($helperClassPath)) {
+            return null;
+        }
+        
+        require_once $helperClassPath;
+        return new $helperClass($this->action, $this->request, $this->session);
+    }
+    
+    /** render the page by template name */
     protected function displayPage($page, array $data = null) {
         if (empty($page)) {
             throw new Exception('No template file was assigned.', Constants::ERR_INVALID_TEMPL_FILE);
@@ -49,17 +65,8 @@ class NFController {
     
     protected function getData($key, array $args = null) {
         if (!$this->isDataHelperInitialized) {
-            // initialize the data helper when this API is firstly called.
             $this->isDataHelperInitialized = true;
-
-            $helperClass = ucfirst($this->controller) . 'DataHelper';
-            $helperClassPath = APPLICATION_ROOT_PATH . "/data-helper/$helperClass.php";
-            if (!file_exists($helperClassPath)) {
-                return null;
-            }
-            
-            require_once $helperClassPath;
-            $this->dataHelper = new $helperClass($this->action);
+            $this->dataHelper = $this->createDataHelper();
         }
 
         return isset($this->dataHelper) ? $this->dataHelper->getData($key, $args) : null;

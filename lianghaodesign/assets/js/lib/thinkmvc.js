@@ -782,7 +782,7 @@ TM.declare('thinkmvc.Base').extend({
   // set/get an attribute to constructor's propotype
   proto: function(name, value) {
     if (!(name && typeof name === 'string')) {
-      return;
+      return null;
     }
 
     var pr = this.constructor.prototype;
@@ -854,9 +854,10 @@ TM.declare('thinkmvc.evt.Event').extend({
       return this;
     }
 
-    var index, callbackList = this._callbackList;
-    while (index = callbackList.lastIndexOf(callback)) {
+    var callbackList = this._callbackList, index = callbackList.lastIndexOf(callback);
+    while (index) {
       callbackList.splice(index, 1);
+      index = callbackList.lastIndexOf(callback)
     }
     return this;
   }
@@ -965,6 +966,8 @@ TM.declare('thinkmvc.Collection').inherit('thinkmvc.evt.EventManager').extend({
     if (index >= 0 && index < this._models.length) {
       return this._models[index];
     }
+    
+    return null;
   },
 
   initialize: function() {
@@ -1145,7 +1148,7 @@ TM.declare('thinkmvc.val.Validator').extend({
 
   getMessage: function() {
     if (!this.hasErrors()) {
-      return;
+      return '';
     }
 
     var msg = null;

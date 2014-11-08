@@ -3,6 +3,13 @@ Code structure:
         controller
             BaseController.php
             ErrorController.php
+        
+        data-helper
+        model
+            entity
+            service
+                DBService.php
+        utility
 
     assets
         css
@@ -17,15 +24,14 @@ Code structure:
 
     lib
         Doctrine
-        Scorpio
+        Scorpion
         smarty
 
     view
         templates
             features
             layouts
-                error.tpl
-                index.tpl
+            pages
         templates_c
             cache_c
 

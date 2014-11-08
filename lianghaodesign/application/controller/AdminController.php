@@ -3,13 +3,13 @@ require_once 'model/service/UserService.php';
 require_once 'controller/BaseController.php';
 
 class AdminController extends BaseController {
-    public function initialize() {
+    protected function initialize() {
         parent::initialize();
         
         $this->setPageTemplateRoot('/pages/admin');
         
         // check if redirection is needed
-        $redirectUrl = $this->getRedirectUrl();
+        $redirectUrl = $this->getData('redirectUrl');
         if (isset($redirectUrl)) {
             $this->request->redirect($redirectUrl);
             return;
@@ -17,23 +17,9 @@ class AdminController extends BaseController {
         
         $this->setPageDataFromHelper('menuUrls');
     }
-    
-    private function getRedirectUrl() {
-        $isRecognizedUser = $this->session->isRecognizedUser();
-        $isSecureAction = $this->isSecureAction();
 
-        if ($this->getController() == 'error') {
-            return null;
-        } elseif ($isSecureAction && !$isRecognizedUser) {
-            return $this->getData('signInUrl');
-        } elseif (!$isSecureAction && $isRecognizedUser) {
-            return $this->getData('homeUrl');
-        } else {
-            return null;
-        }
-    }
-    
     public function accountAction() {
+        $args = null;
         if ($this->request->isPost() && $this->request->getParameter('action') == 'updatePwd') {
             try {
                 (new UserService)->changePassword(
@@ -42,26 +28,26 @@ class AdminController extends BaseController {
                     $this->request->getParameter('newPwd')
                 );
                 
-                $this->setPageDataFromHelper('accountPageData', array('isUpdated' => true));
+                $args = array('isUpdated' => true);
             } catch (Exception $e) {
-                $this->setPageDataFromHelper('accountPageData', array('isUpdated' => false));
+                $args = array('isUpdated' => false);
             }
-        } else {
-            $this->setPageDataFromHelper('accountPageData');
         }
-
+        
+        $this->setPageDataFromHelper('accountPageData', $args);
         $this->displayPage('account');
     }
-    
+
     public function homeAction() {
-        $this->displayPage('home', array(title => 'Welcome'));
+        $this->setPageDataFromHelper('homePageData');
+        $this->displayPage('home');
     }
-    
+
     public function indexAction() {
         $this->setPageDataFromHelper('gatewayPageData');
         $this->displayPage('gateway');
     }
-    
+
     public function signinAction() {
         if (!$this->request->isPost()) {
             return $this->indexAction();
@@ -74,16 +60,11 @@ class AdminController extends BaseController {
             (new UserService)->authenticate($userID, $password);
             $this->request->redirect($this->getData('homeUrl'));
         } catch(Exception $e) {
-            $this->setPageData(array(
-                message => 'The user ID and password does not match.',
-                messageType => 'error',
-                userID => $userID
-            ));
-            
+            $this->setPageDataFromHelper('signInErrorData', array(userID => $userID));
             $this->indexAction();
         }
     }
-    
+
     public function signoutAction() {
         (new UserService)->unauthenticate();
         $this->indexAction();

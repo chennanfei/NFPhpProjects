@@ -2,16 +2,20 @@
 require_once 'Scorpion/Utility/NFUtil.php';
 
 class NFDataHelper {
-    private $action;
-    
-    public function __construct($action) {
+    protected $action;
+    protected $request;
+    protected $session;
+
+    public function __construct($action, $request, $session) {
         $this->action = $action;
+        $this->request = $request;
+        $this->session = $session;
+        
+        if (method_exists($this, 'initialize')) {
+            $this->initialize();
+        }
     }
-    
-    protected function getAction() {
-        return $this->action;
-    }
-    
+
     protected function getAssets() {
         return null;
     }

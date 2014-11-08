@@ -11,6 +11,11 @@ TM.configure({
     },
     
     pages: {
+        account: {
+            controller: 'controller.AccountController',
+            module: 'first'
+        },
+        
         home: {
             controller: 'controller.HomeController',
             module: 'first'
@@ -23,9 +28,127 @@ TM.configure({
     }
 });
 
+// sign in
 TM.declare('controller.SignInController').inherit('thinkmvc.Controller').extend(function() {
     return {
         events: {
+            'click input[name="signInBtn"]': 'checkoutInputs'
+        },
+        
+        selectors: {
+            pwd: 'input[name="password"]',
+            uid: 'input[name="userID"]'
+        },
+
+        checkoutInputs: function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var auth = this.U.createInstance('model.UserAuth', this._el.$uid.val(), this._el.$pwd.val());
+            auth.handle();
+        }
+    };
+});
+
+TM.declare('model.UserAuth').inherit('thinkmvc.Model').extend({
+    viewPath: 'view.UserAuthView',
+    
+    initialize: function(userID, password) {
+        this.invoke('thinkmvc.Model:initialize');
+
+        this._uid = userID;
+        this._pwd = password;
+    },
+    
+    handle: function() {
+        var validator = this.U.createInstance('thinkmvc.val.Validator', this);
+        if (validator.hasErrors()) {
+            this.trigger('show-error', validator.getMessage());
+        } else {
+            this.trigger('sign-in');
+        }
+    },
+
+    validate: function(validator) {
+        if (!(this._uid && this._uid.length >= 6)) {
+            validator.createError('uid', 'User ID should have 6 or more charactors.');
+        }
+        
+        if (!(this.verifyPassword(this._pwd))) {
+            validator.createError('pwd', 'Password should have 6~15 charactors.');
+        }
+    },
+    
+    verifyPassword: function(pwd) {
+        return pwd && pwd.length >= 6 && pwd.length <= 15;
+    }
+});
+
+TM.declare('view.UserAuthView').inherit('thinkmvc.View').extend({
+    events: {
+        'show-error': 'showError',
+        'sign-in': 'submitSignInForm'
+    },
+    
+    selectors: {
+        alert: '#msgAlert',
+        form: '#userAuthForm'
+    },
+    
+    showError: function(event) {
+        this._el.$alert.removeClass('lh-hidden').addClass('lh-alert-error').html(event.data);
+    },
+    
+    submitSignInForm: function(event) {
+        this._el.$alert.addClass('lh-hidden');
+        this._el.$form.submit();
+    }
+});
+
+// change password
+TM.declare('model.ChangePwdAuth').inherit('model.UserAuth').extend({
+
+    initialize: function(userID, oldPwd, newPwd, confirmedPwd) {
+        this.invoke('model.UserAuth:initialize', userID, oldPwd);
+
+        this._newPwd = newPwd;
+        this._confirmedPwd = confirmedPwd;
+    },
+    
+    validate: function(validator) {
+        this.invoke('model.UserAuth:validate', validator);
+        
+        if (!this.verifyPassword(this._newPwd)) {
+            validator.createError('newPwd', 'New password should have 6~15 charactors.');
+        }
+        
+        if (this._confirmedPwd !== this._newPwd) {
+            validator.createError('confirmedPwd', 'New passwords you enter twice do not match.');
+        }
+    }
+});
+
+TM.declare('controller.AccountController').inherit('thinkmvc.Controller').extend(function() {
+    return {
+        events: {
+            'click #confirmBtn': 'checkoutInputs'
+        },
+        
+        selectors: {
+            confirmedPwd: 'input[name="confirmedPwd"]',
+            newPwd: 'input[name="newPwd"]',
+            oldPwd: 'input[name="oldPwd"]',
+            uid: 'input[name="userID"]'
+        },
+
+        checkoutInputs: function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var auth = this.U.createInstance('model.ChangePwdAuth',
+                this._el.$uid.val(), this._el.$oldPwd.val(),
+                this._el.$newPwd.val(), this._el.$confirmedPwd.val());
+            auth.handle();
         }
     };
 });
