@@ -1,9 +1,41 @@
+.lh-block {
+    display: block !important;
+}
+
+.lh-color-primary {
+    color: $primary-color !important;
+}
+
+.lh-color-secondary {
+    color: $secondary-color !important;
+}
+
+.lh-text-bold {
+    font-weight: bold !important;
+}
+
 .lh-text-right {
-    text-align: right;
+    text-align: right !important;
 }
 
 .lh-size-medium {
-    font-size: 16px;
+    font-size: 16px !important;
+}
+
+.lh-spacing-small {
+    margin-bottom: 6px !important;
+}
+
+.lh-spacing-base {
+    margin-bottom: 10px !important;
+}
+
+.lh-spacing-medium {
+    margin-bottom: 16px !important;
+}
+
+.lh-spacing-big {
+    margin-bottom: 28px !important;
 }
 
 .lh-spacing-top-big {

@@ -61,6 +61,15 @@ class NFDBService {
         return $query->getResult();
     }
     
+    public function remove($entity) {
+        if (!isset($entity)) {
+            throw new Exception('Invalid entity', NFConstants::ERR_INVALID_ENTITY);
+        }
+        
+        $this->entityManager->remove($entity);
+        $this->entityManager->flush();
+    }
+    
     public function save($entity) {
         if (!isset($entity)) {
             throw new Exception('Invalid entity', NFConstants::ERR_INVALID_ENTITY);

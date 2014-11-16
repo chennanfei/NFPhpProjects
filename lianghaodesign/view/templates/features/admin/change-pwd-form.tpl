@@ -1,28 +1,16 @@
 <form id="userAuthForm" class="lh-box lh-form" action="{$accountUrl}" method="post">
-    <div class="lh-row lh-input">
-        <div class="lh-col4 lh-input-label">User ID:</div>
-        <div class="lh-col8 lh-col-last">
-            <input class="lh-input-text" type="text" name="userID" value="{$userID}" autofocus>
-        </div>
-    </div>
-    <div class="lh-row lh-input">
-        <div class="lh-col4 lh-input-label">Old password:</div>
-        <div class="lh-col8 lh-col-last">
-            <input class="lh-input-text" type="password" name="oldPwd">
-        </div>
-    </div>
-    <div class="lh-row lh-input">
-        <div class="lh-col4 lh-input-label">New password:</div>
-        <div class="lh-col8 lh-col-last">
-            <input class="lh-input-text" type="password" name="newPwd">
-        </div>
-    </div>
-    <div class="lh-row lh-input">
-        <div class="lh-col4 lh-input-label">Confirm password:</div>
-        <div class="lh-col8 lh-col-last">
-            <input class="lh-input-text" type="password" name="confirmedPwd">
-        </div>
-    </div>
+    {include file="widgets/text-input-row.tpl" left_col=4 input_label="User ID"
+        input_name="userID" input_value="{$userID}" auto_focus="1"}
+
+    {include file="widgets/text-input-row.tpl" left_col=4 input_type="password"
+        input_label="Old password" input_name="oldPwd"}
+    
+    {include file="widgets/text-input-row.tpl" left_col=4 input_type="password"
+        input_label="New password" input_name="newPwd"}
+    
+    {include file="widgets/text-input-row.tpl" left_col=4 input_type="password"
+        input_label="Confirm password" input_name="confirmedPwd"}
+
     <div class="lh-row lh-input">
         <div class="lh-col4-offset lh-col8 lh-col-last lh-text-right">
             <input type="hidden" name="action" value="updatePwd">

@@ -34,7 +34,8 @@ class NFApplicationContext {
         try {
             $this->dispathRequest();
         } catch (Exception $e) {
-            $this->redirectToError();
+            print_r($e);
+            //$this->redirectToError();
         }
     }
 }

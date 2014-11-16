@@ -1,5 +1,4 @@
 <?php
-require_once 'model/service/UserService.php';
 require_once 'controller/BaseController.php';
 
 class AdminController extends BaseController {
@@ -19,23 +18,13 @@ class AdminController extends BaseController {
     }
 
     public function accountAction() {
-        $args = null;
-        if ($this->request->isPost() && $this->request->getParameter('action') == 'updatePwd') {
-            try {
-                (new UserService)->changePassword(
-                    $this->request->getParameter('userID'),
-                    $this->request->getParameter('oldPwd'),
-                    $this->request->getParameter('newPwd')
-                );
-                
-                $args = array('isUpdated' => true);
-            } catch (Exception $e) {
-                $args = array('isUpdated' => false);
-            }
-        }
-        
-        $this->setPageDataFromHelper('accountPageData', $args);
+        $this->setPageDataFromHelper('accountPageData');
         $this->displayPage('account');
+    }
+    
+    public function createProjAction() {
+        $this->setPageDataFromHelper('newProjectPageData');
+        $this->displayPage('project-edit');
     }
 
     public function homeAction() {
@@ -49,24 +38,17 @@ class AdminController extends BaseController {
     }
 
     public function signinAction() {
-        if (!$this->request->isPost()) {
-            return $this->indexAction();
-        }
-        
-        $userID = $this->request->getParameter('userID');
-        $password = $this->request->getParameter('password');
-        
-        try {
-            (new UserService)->authenticate($userID, $password);
-            $this->request->redirect($this->getData('homeUrl'));
-        } catch(Exception $e) {
-            $this->setPageDataFromHelper('signInErrorData', array(userID => $userID));
+        $pageData = $this->getData('signInPageData');
+        if ($pageData['isAuthOK']) {
+            $this->request->redirect($pageData['homeUrl']);
+        } else {
+            $this->setPageData($pageData);
             $this->indexAction();
         }
     }
 
     public function signoutAction() {
-        (new UserService)->unauthenticate();
+        $this->setPageDataFromHelper('signOutPageData');
         $this->indexAction();
     }    
     

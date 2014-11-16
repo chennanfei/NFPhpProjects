@@ -2,18 +2,14 @@
 require_once 'Scorpion/Utility/NFSession.php';
 require_once 'utility/Constants.php';
 require_once 'model/entity/User.php';
-require_once 'model/service/DBService.php';
+require_once 'model/service/BaseService.php';
 
-class UserService {
-    private $dbService;
-    
-    public function __construct() {
-        $this->dbService = new DBService;
-    }
-    
+class UserService extends BaseService {
     /* verify user and update status */
     public function authenticate($userID, $password) {
         $user = $this->getAuthenticatedUser($userID, $password);
+        $user->setLoginTime(date('Y-m-d H:i:s'));
+        $this->dbService->save($user);
         (new NFSession)->setUserID($userID);
     }
     
@@ -34,13 +30,13 @@ class UserService {
         $user->setPassword(password_hash($newPwd, PASSWORD_DEFAULT));
         $this->dbService->save($user);
     }
-    
+
     private function getAuthenticatedUser($userID, $password) {
         if (empty($userID) || empty($password)) {
             throw new Exception('Empty userID or password?', Constants::ERR_INVALID_ARGS);
         }
         
-        $users = $this->dbService->query('select u from User u where u.id=:uid', array(uid => $userID));
+        $users = $this->dbService->query('select u from User u where u.id=:uid', array('uid' => $userID));
         if (!isset($users) || empty($users)) {
             throw new Exception('User does not exist.', Constants::ERR_USER_NOT_EXIST);
         }

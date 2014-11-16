@@ -21,6 +21,11 @@ TM.configure({
             module: 'first'
         },
         
+        project: {
+            controller: 'controller.ProjectController',
+            module: 'first'
+        },
+        
         signIn: {
             controller: 'controller.SignInController',
             module: 'first'
@@ -29,25 +34,22 @@ TM.configure({
 });
 
 // sign in
-TM.declare('controller.SignInController').inherit('thinkmvc.Controller').extend(function() {
-    return {
-        events: {
-            'click input[name="signInBtn"]': 'checkoutInputs'
-        },
-        
-        selectors: {
-            pwd: 'input[name="password"]',
-            uid: 'input[name="userID"]'
-        },
+TM.declare('controller.SignInController').inherit('thinkmvc.Controller').extend({
+    events: {
+        'click input[name="signInBtn"]': 'checkoutInputs'
+    },
 
-        checkoutInputs: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
+    selectors: {
+        pwd: 'input[name="password"]',
+        uid: 'input[name="userID"]'
+    },
 
-            var auth = this.U.createInstance('model.UserAuth', this._el.$uid.val(), this._el.$pwd.val());
-            auth.handle();
-        }
-    };
+    checkoutInputs: function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        this.U.createInstance('model.UserAuth', this._el.$uid.val(), this._el.$pwd.val()).handle();
+    }
 });
 
 TM.declare('model.UserAuth').inherit('thinkmvc.Model').extend({
@@ -73,8 +75,8 @@ TM.declare('model.UserAuth').inherit('thinkmvc.Model').extend({
         if (!(this._uid && this._uid.length >= 6)) {
             validator.createError('uid', 'User ID should have 6 or more charactors.');
         }
-        
-        if (!(this.verifyPassword(this._pwd))) {
+
+        if (!this.verifyPassword(this._pwd)) {
             validator.createError('pwd', 'Password should have 6~15 charactors.');
         }
     },
@@ -107,7 +109,6 @@ TM.declare('view.UserAuthView').inherit('thinkmvc.View').extend({
 
 // change password
 TM.declare('model.ChangePwdAuth').inherit('model.UserAuth').extend({
-
     initialize: function(userID, oldPwd, newPwd, confirmedPwd) {
         this.invoke('model.UserAuth:initialize', userID, oldPwd);
 
@@ -120,42 +121,67 @@ TM.declare('model.ChangePwdAuth').inherit('model.UserAuth').extend({
         
         if (!this.verifyPassword(this._newPwd)) {
             validator.createError('newPwd', 'New password should have 6~15 charactors.');
-        }
-        
-        if (this._confirmedPwd !== this._newPwd) {
+        } else if (this._confirmedPwd !== this._newPwd) {
             validator.createError('confirmedPwd', 'New passwords you enter twice do not match.');
         }
     }
 });
 
-TM.declare('controller.AccountController').inherit('thinkmvc.Controller').extend(function() {
-    return {
-        events: {
-            'click #confirmBtn': 'checkoutInputs'
-        },
-        
-        selectors: {
-            confirmedPwd: 'input[name="confirmedPwd"]',
-            newPwd: 'input[name="newPwd"]',
-            oldPwd: 'input[name="oldPwd"]',
-            uid: 'input[name="userID"]'
-        },
+TM.declare('controller.AccountController').inherit('thinkmvc.Controller').extend({
+    events: {
+        'click #confirmBtn': 'checkoutInputs'
+    },
 
-        checkoutInputs: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
+    selectors: {
+        confirmedPwd: 'input[name="confirmedPwd"]',
+        newPwd: 'input[name="newPwd"]',
+        oldPwd: 'input[name="oldPwd"]',
+        uid: 'input[name="userID"]'
+    },
 
-            var auth = this.U.createInstance('model.ChangePwdAuth',
-                this._el.$uid.val(), this._el.$oldPwd.val(),
-                this._el.$newPwd.val(), this._el.$confirmedPwd.val());
-            auth.handle();
-        }
-    };
+    checkoutInputs: function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        this.U.createInstance('model.ChangePwdAuth',
+            this._el.$uid.val(), this._el.$oldPwd.val(),
+            this._el.$newPwd.val(), this._el.$confirmedPwd.val()
+        ).handle();
+    }
 });
 
-TM.declare('controller.HomeController').inherit('thinkmvc.Controller').extend(function() {
-    return {
-        events: {
+// home
+TM.declare('controller.HomeController').inherit('thinkmvc.Controller').extend({});
+
+// project
+TM.declare('controller.ProjectController').inherit('thinkmvc.Controller').extend({
+    events: {
+        'change select[name=channel]': 'displayPrograms'
+    },
+    
+    rootNode: '#projectForm',
+    
+    selectors: {
+        programSel: 'select[name=program]'
+    },
+    
+    displayPrograms: function(event) {
+        var i, groupId = 'programs.' + $(event.currentTarget).val(),
+            $sel = this._el.$programSel, $groups = $sel.find('optgroup'), isFound = false;
+
+        for (i = 0; i< $groups.length; i++) {
+            var $grp = $groups.eq(i);
+            if ($grp.attr('id') == groupId) {
+                $grp.removeClass('lh-hidden');
+                $sel.val($grp.find('option:first').val());
+                isFound = true;
+            } else {
+                $grp.addClass('lh-hidden');
+            }
         }
-    };
+        
+        if (!isFound) {
+            $sel.val($sel.find('option:first').val());
+        }
+    }
 });

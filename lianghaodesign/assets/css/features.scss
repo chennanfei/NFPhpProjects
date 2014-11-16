@@ -15,3 +15,20 @@
     margin: 100px auto;
     width: 360px;
 }
+
+.lh-box-home {
+    cursor: pointer;
+    display: block;
+
+    .lh-box-inner {
+        color: $primary-color;
+        
+        &:hover {
+            background-color: #FAFAFA;
+        }
+    }
+}
+
+.lh-box-project {
+    width: 600px;
+}
