@@ -4,7 +4,7 @@ php:
   - 5.4
 
 before_script:
-  - mkdir projects/testresults
+  - mkdir shippable/chennanfei
 
 notifications:
   email: false
