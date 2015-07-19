@@ -1,0 +1,6 @@
+.dockerignore
+.git
+.gitignore
+.DS_Store
+.komodotools
+docs

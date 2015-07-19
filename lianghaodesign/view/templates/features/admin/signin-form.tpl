@@ -7,7 +7,7 @@
 
     <div class="lh-row lh-input">
         <div class="lh-col3-offset lh-col9 lh-col-last lh-text-right">
-            <input class="lh-button lh-button-primary" type="submit" name="signInBtn" value="Sign in">
+            <input class="lh-button lh-button-primary" type="submit" name="signInBtn" value="Sign In">
         </div>
     </div>
 </form>

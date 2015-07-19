@@ -14,7 +14,11 @@ class NFUtil {
             self::$baseUrl .= ':' . $_SERVER['SEVER_PORT'];
         }
     
-        return self::$baseUrl = self::$baseUrl . '/' . self::getAppName();
+        $appName = self::getAppName();
+        if (isset($appName)) {
+            self::$baseUrl = self::$baseUrl . '/' . self::getAppName();
+        }
+        return self::$baseUrl;
     }
     
     public static function getImageUrl($path) {
@@ -40,6 +44,9 @@ class NFUtil {
     /* get current application name */
     public static function getAppName() {
         $terms = split('[\/*+\/]', $_SERVER['SCRIPT_NAME']);
+        if ($terms[1] == 'index.php') {
+            return null;
+        }
         return $terms[1];
     }
     
