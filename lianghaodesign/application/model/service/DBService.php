@@ -4,11 +4,11 @@ require_once 'Scorpion/DB/NFDBService.php';
 class DBService extends NFDBService {
     protected function getConfig() {
         return array(
-            'dbname'    => 'lianghao',
+            'dbname'    => getenv('DATABASE_NAME'),
             'driver'    => 'pdo_mysql',
-            'host'      => 'localhost',
-            'password'  => 'eric1980',
-            'user'      => 'root'
+            'host'      => getenv('DATABASE_HOST'),
+            'password'  => getenv('DATABASE_PASSWORD'),
+            'user'      => getenv('DATABASE_USER')
         );
     }
 }

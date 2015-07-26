@@ -7,6 +7,13 @@ class BaseController extends NFController {
     protected function initialize() {
         $this->setPageData(array('page' => 'home', 'title' => 'Lianghao'));
         $this->setPageDataFromHelper('assets');
+        $this->setPageDataFromHelper('menuUrls');
+
+        // check if redirection is needed
+        $redirectUrl = $this->getData('redirectUrl');
+        if (isset($redirectUrl)) {
+            $this->request->redirect($redirectUrl);
+        }
     }
 }
 ?>

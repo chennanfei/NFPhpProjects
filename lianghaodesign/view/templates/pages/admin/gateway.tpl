@@ -7,9 +7,8 @@
 {block name="center"}
 <div class="lh-box lh-box-signin">
     {include file="features/admin/page-content-title.tpl"}
-    
+    {include file="widgets/alert.tpl"}
     <div class="lh-box-inner">
-        {include file="features/admin/message.tpl"}
         {include file="features/admin/signin-form.tpl"}
     </div>
 </div>

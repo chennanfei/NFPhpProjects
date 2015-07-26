@@ -1,7 +1,7 @@
 <?php
 /**
 @Entity
-@Table(name="user")
+@Table(name="users")
 */
 class User {
     /** @id @Column(type="string") */

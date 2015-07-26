@@ -1,14 +1,23 @@
 <?php
+/**
+@Entity
+@Table(name="programs")
+*/
 class Program {
-    private $chineseName;
-    private $englishName;
+    /** @id @Column(type="integer") */
     private $id;
-    
-    public function __construct($cnName, $enName, $id) {
-        $this->chineseName = $cnName;
-        $this->englishName = $enName;
-        $this->id = $id;
-    }
+
+    /** @Column(type="string", name="chinese_title") */
+    private $chineseName;
+
+    /** @Column(type="string", name="english_title") */
+    private $enlighName;
+
+    /** @Column(type="integer", name="display_order") */
+    private $displayOrder;
+
+    /** @Column(type="integer", name="site_channel_id") */
+    private $siteChannelId;
     
     public function getChineseName() {
         return $this->chineseName;
@@ -20,6 +29,14 @@ class Program {
     
     public function getId() {
         return $this->id;
+    }
+
+    public function getDisplayOrder() {
+        return $this->displayOrder;
+    }
+
+    public function getSiteChannelId() {
+        return $this->siteChannelId;
     }
 }
 ?>

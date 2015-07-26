@@ -71,5 +71,9 @@ class NFUtil {
         }  
         return $realIP;  
     }
+    
+    public static function now($format = 'Y-m-d H:i:s') {
+        return date($format);
+    }
 }
 ?>

@@ -11,7 +11,7 @@
     </div>
     <div class="lh-content lh-row lh-spacing-top-big">
         <div class="lh-col3">
-            {include file="features/admin/menu.tpl"}
+            {block name="menu"}{/block}
         </div>
         <div class="lh-col9 lh-col-last">
             {block name="center"}{/block}

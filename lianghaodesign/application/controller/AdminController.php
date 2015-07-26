@@ -3,18 +3,8 @@ require_once 'controller/BaseController.php';
 
 class AdminController extends BaseController {
     protected function initialize() {
-        parent::initialize();
-        
         $this->setPageTemplateRoot('/pages/admin');
-        
-        // check if redirection is needed
-        $redirectUrl = $this->getData('redirectUrl');
-        if (isset($redirectUrl)) {
-            $this->request->redirect($redirectUrl);
-            return;
-        }
-        
-        $this->setPageDataFromHelper('menuUrls');
+        parent::initialize();
     }
 
     public function accountAction() {
@@ -38,11 +28,11 @@ class AdminController extends BaseController {
     }
 
     public function signinAction() {
-        $pageData = $this->getData('signInPageData');
-        if ($pageData['isAuthOK']) {
-            $this->request->redirect($pageData['homeUrl']);
+        $data = $this->getData('signInPageData');
+        if (isset($data['nextUrl'])) {
+            $this->request->redirect($data['nextUrl']);
         } else {
-            $this->setPageData($pageData);
+            $this->setPageData($data);
             $this->indexAction();
         }
     }
@@ -51,7 +41,7 @@ class AdminController extends BaseController {
         $this->setPageDataFromHelper('signOutPageData');
         $this->indexAction();
     }    
-    
+
 }
 
 ?>

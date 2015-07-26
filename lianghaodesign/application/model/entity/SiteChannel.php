@@ -1,39 +1,28 @@
 <?php
+/**
+@Entity
+@Table(name="site_channels")
+*/
 class SiteChannel {
+    /** @id @Column(type="integer") */
     private $id;
-    private $cnName;
-    private $enName;
-    private $programs;
-    
-    public function __construct($cnName, $enName, $id) {
-        $this->cnName   = $cnName;
-        $this->enName   = $enName;
-        $this->id       = $id;
-        $this->programs = array();
-    }
-    
-    public function addProgram($program) {
-        if (!isset($program)) {
-            throw new Exception('Invalid program object');
-        }
 
-        array_push($this->programs, $program);
-    }
+    /** @Column(type="string", name="chinese_title") */
+    private $chineseName;
+
+    /** @Column(type="string", name="english_title") */
+    private $enlighName;
     
     public function getChineseName() {
-        return $this->cnName;
+        return $this->chineseName;
     }
     
     public function getEnglishName() {
-        return $this->enName;
+        return $this->enlighName;
     }
     
     public function getId() {
         return $this->id;
-    }
-    
-    public function getPrograms() {
-        return $this->programs;
     }
 }
 ?>

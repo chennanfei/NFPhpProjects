@@ -12,7 +12,7 @@ class NFSmartyHelper {
         $this->smarty->left_delimiter = "{";
         $this->smarty->right_delimiter = "}";
         $this->smarty->compile_dir = $_ENV['SMARTY_COMPILE_DIR'];
-        $this->smarty->cache_dir = $_ENV['SMARTY_COMPILE__CACHE_DIR'];
+        $this->smarty->cache_dir = $_ENV['SMARTY_COMPILE_CACHE_DIR'];
         $this->smarty->template_dir = SITE_ROOT_PATH . self::TEMPLATES_ROOT;
     }
     

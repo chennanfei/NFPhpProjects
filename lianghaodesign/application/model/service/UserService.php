@@ -1,5 +1,6 @@
 <?php
 require_once 'Scorpion/Utility/NFSession.php';
+require_once 'Scorpion/Utility/NFUtil.php';
 require_once 'utility/Constants.php';
 require_once 'model/entity/User.php';
 require_once 'model/service/BaseService.php';
@@ -8,7 +9,7 @@ class UserService extends BaseService {
     /* verify user and update status */
     public function authenticate($userID, $password) {
         $user = $this->getAuthenticatedUser($userID, $password);
-        $user->setLoginTime(date('Y-m-d H:i:s'));
+        $user->setLoginTime(NFUtil::now());
         $this->dbService->save($user);
         (new NFSession)->setUserID($userID);
     }
@@ -16,7 +17,6 @@ class UserService extends BaseService {
     /* change password */
     public function changePassword($userID, $oldPwd, $newPwd) {
         $user = $this->getAuthenticatedUser($userID, $oldPwd);
-        
         if (empty($newPwd)) {
             throw new Exception('Empty new password?', Constants::ERR_INVALID_ARGS);
         }

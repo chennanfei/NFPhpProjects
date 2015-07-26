@@ -16,6 +16,16 @@ TM.configure({
             module: 'first'
         },
         
+        gwImageList: {
+            controller: 'controller.GatewayImageListController',
+            module: 'first'
+        },
+        
+        gwImageAdd: {
+            controller: 'controller.GatewayImageAddController',
+            module: 'first'
+        },
+        
         home: {
             controller: 'controller.HomeController',
             module: 'first'
@@ -184,4 +194,12 @@ TM.declare('controller.ProjectController').inherit('thinkmvc.Controller').extend
             $sel.val($sel.find('option:first').val());
         }
     }
+});
+
+TM.declare('controller.GatewayImageListController').inherit('thinkmvc.Controller').extend({
+    
+});
+
+TM.declare('controller.GatewayImageAddController').inherit('thinkmvc.Controller').extend({
+    
 });

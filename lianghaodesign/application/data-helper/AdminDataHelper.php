@@ -1,25 +1,15 @@
 <?php
 require_once 'Scorpion/Utility/NFUtil.php';
-require_once 'Scorpion/Helper/NFDataHelper.php';
+require_once 'data-helper/BaseDataHelper.php';
 require_once 'model/service/UserService.php';
 require_once 'model/service/SiteChannelService.php';
 
-class AdminDataHelper extends NFDataHelper {
-    private $secureActions;
-    
+class AdminDataHelper extends BaseDataHelper {
     protected function initialize() {
-        $this->scureActions = array('account', 'createProj', 'home', 'projects', 'updateGW', 'updateTeam');
-    }
-
-    protected function getAssets() {
-        return array(
-            'styles' => array(NFUtil::getStylePath('page.css')),
-            
-            // ThinkMVC has a bug that the modules depended by 'first' module are not downloaded
-            // a solution is, separate thinkmvc to two parts: core and mvc. insert core part into page
-            'jqJS'   => NFUtil::getScriptUrl('lib/jquery-1.11.0.js'),
-            'libJS'  => NFUtil::getScriptUrl('lib/thinkmvc.js'),
-            'pageJS' => NFUtil::getScriptUrl('page.js')
+        $this->scureActions = array(
+            'account',
+            'home',
+            'projects',
         );
     }
 
@@ -29,7 +19,7 @@ class AdminDataHelper extends NFDataHelper {
         $messageType = '';
         $req = $this->request;
         
-        if ($req->isPost() && $req->getParameter('action') == 'updatePWD') {
+        if ($req->isPost() && $req->getParameter('action') == 'updatePwd') {
             try {
                 (new UserService)->changePassword(
                     $req->getParameter('userID'),
@@ -63,25 +53,18 @@ class AdminDataHelper extends NFDataHelper {
             'pageContentTitle' => 'Sign in now',
         );
     }
-
+    
     // data for home page
     protected function getHomePageData() {
         return array('title' => 'Welcome');
     }
 
-    protected function getHomeUrl() {
-        return NFUtil::getUrl('/admin/home');
-    }
-
     protected function getMenuUrls() {
         return array(
-            'accountUrl'    => NFUtil::getUrl('/admin/account'),
-            'homeUrl'       => $this->getHomeUrl(),
-            'newProjUrl'    => NFUtil::getUrl('/admin/createProj'),
-            'projectsUrl'   => NFUtil::getUrl('/admin/projects'),
-            'signOutUrl'    => NFUtil::getUrl('/admin/signout'),
-            'updateGWUrl'   => NFUtil::getUrl('/admin/updateGW'),
-            'updateTeamUrl' => NFUtil::getUrl('/admin/updateTeam'),
+            'accountUrl'       => NFUtil::getUrl('/admin/account'),
+            'homeUrl'          => $this->getHomeUrl(),
+            'signOutUrl'       => NFUtil::getUrl('/admin/signout'),
+            'gatewayImagesUrl' => NFUtil::getUrl('/gatewayImage/listImages')
         );
     }
     
@@ -101,23 +84,6 @@ class AdminDataHelper extends NFDataHelper {
         );
     }
 
-    protected function getRedirectUrl() {
-        $isRecognizedUser = $this->session->isRecognizedUser();
-        $isSecureAction = in_array($this->action, $this->scureActions);
-
-        if ($isSecureAction && !$isRecognizedUser) {
-            return $this->getSignInUrl();
-        } elseif (!$isSecureAction && $isRecognizedUser) {
-            return $this->getHomeUrl();
-        } else {
-            return null;
-        }
-    }
-
-    protected function getSecureActions() {
-        return $this->scureActions;
-    }
-    
     // data for sign in page
     protected function getSignInPageData() {
         $req = $this->request;
@@ -130,13 +96,12 @@ class AdminDataHelper extends NFDataHelper {
         
         try {
             (new UserService)->authenticate($userID, $password);
-            return array('isAuthOK' => true, 'homeUrl' => $this->getHomeUrl());
+            return array('nextUrl' => $this->getHomeUrl());
         } catch(Exception $e) {
             return array(
-                'isAuthOK'    => false,
-                'message'     => 'The user ID and password does not match.',
-                'messageType' => 'error',
-                'userID'      => $userID
+                'message' => $e->getMessage(),
+                '$messageType' => 'error',
+                'userID'  => $userID
             );
         }
     }
@@ -147,8 +112,5 @@ class AdminDataHelper extends NFDataHelper {
         return null;
     }
 
-    protected function getSignInUrl() {
-        return NFUtil::getUrl('/admin/signin');
-    }
 }
 ?>
