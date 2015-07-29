@@ -1,6 +1,6 @@
 FROM tutum/apache-php:latest
 
-RUN apt-get update && apt-get install -y ruby2
+RUN apt-get update && apt-get install -y ruby2.0
 RUN gem list && gem install -y sass
 
 ENV SMARTY_COMPILE_DIR /templates_c
