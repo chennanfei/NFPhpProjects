@@ -5,7 +5,8 @@ require_once 'model/service/UserService.php';
 require_once 'model/service/SiteChannelService.php';
 
 class AdminDataHelper extends BaseDataHelper {
-    protected function initialize() {
+    public function initialize() {
+        parent::initialize();
         $this->scureActions = array(
             'account',
             'home',
@@ -47,7 +48,7 @@ class AdminDataHelper extends BaseDataHelper {
     // data for gateway page
     protected function getGatewayPageData() {
         return array(
-            'signInUrl' => $this->getSignInUrl(),
+            'signInUrl' => $this->urlHelper->getSignInUrl(),
             'title'     => 'Sign in',
             'page'      => 'signIn',
             'pageContentTitle' => 'Sign in now',
@@ -61,10 +62,10 @@ class AdminDataHelper extends BaseDataHelper {
 
     protected function getMenuUrls() {
         return array(
-            'accountUrl'       => NFUtil::getUrl('/admin/account'),
-            'homeUrl'          => $this->getHomeUrl(),
-            'signOutUrl'       => NFUtil::getUrl('/admin/signout'),
-            'gatewayImagesUrl' => NFUtil::getUrl('/gatewayImage/listImages')
+            'accountUrl' => $this->urlHelper->getAcountUrl(),
+            'homeUrl' => $this->urlHelper->getHomeUrl(),
+            'signOutUrl' => $this->urlHelper->getSignOutUrl(),
+            'imagesUrl' => $this->urlHelper->getGatewayImagesUrl()
         );
     }
     
@@ -96,7 +97,7 @@ class AdminDataHelper extends BaseDataHelper {
         
         try {
             (new UserService)->authenticate($userID, $password);
-            return array('nextUrl' => $this->getHomeUrl());
+            return array('nextUrl' => $this->urlHelper->getHomeUrl());
         } catch(Exception $e) {
             return array(
                 'message' => $e->getMessage(),

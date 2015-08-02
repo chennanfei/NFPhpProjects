@@ -140,6 +140,16 @@ textarea {
     &.lh-alert-info {
         background-color: #d9edf7;
     }
+    
+    p {
+        margin: 5px 0;
+    }
+    p:first-child {
+        margin-top: 0; 
+    }
+    p:last-child {
+        margin-bottom: 0;
+    }
 }
 
 // menu

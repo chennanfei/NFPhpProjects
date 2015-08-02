@@ -5,7 +5,9 @@
             <option>Choose a channel</option>
         {if $channels}
             {foreach from=$channels item=channel}
-            <option value="{$channel->getId()}">{$channel->getChineseName()} - {$channel->getEnglishName()}</option>
+            <option value="{$channel->getId()}" {if $image->getSiteChannelId() == $channel->getId()}selected{/if}>
+                {$channel->getChineseName()} - {$channel->getEnglishName()}
+            </option>
             {/foreach}
         {/if}
         </select>

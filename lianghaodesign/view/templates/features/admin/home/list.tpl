@@ -1,5 +1,5 @@
 <div class="lh-row lh-spacing-big lh-spacing-top-big">
-    {include file="widgets/box-link.tpl" box_url=$gatewayImagesUrl box_title="GATEWAY IMAGES"
+    {include file="widgets/box-link.tpl" box_url=$imagesUrl box_title="GATEWAY IMAGES"
         box_content="Update the images displayed on the gateway page which customers firstly access."}
 <!--
     {include file="widgets/box-link.tpl" box_url=$projectsUrl box_title="PROJECTS"

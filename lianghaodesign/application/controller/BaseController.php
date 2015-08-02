@@ -15,5 +15,9 @@ class BaseController extends NFController {
             $this->request->redirect($redirectUrl);
         }
     }
+    
+    protected function redirectError($code = 500) {
+        return $this->request->redirect(NFUtil::getUrl('/error?code=' . $code));
+    }
 }
 ?>

@@ -9,12 +9,15 @@
     <div class="lh-header">
         {include file="features/admin/header-small.tpl"}
     </div>
-    <div class="lh-content lh-row lh-spacing-top-big">
-        <div class="lh-col3">
-            {block name="menu"}{/block}
-        </div>
-        <div class="lh-col9 lh-col-last">
-            {block name="center"}{/block}
+    <div class="lh-content lh-spacing-top-big">
+        {include file="features/admin/page-content-title.tpl"}
+        <div class="lh-row">
+            <div class="lh-col3">
+                {block name="menu"}{/block}
+            </div>
+            <div class="lh-col9 lh-col-last">
+                {block name="center"}{/block}
+            </div>
         </div>
     </div>
 </body>

@@ -1,9 +1,14 @@
 <?php
 require_once 'Scorpion/Utility/NFUtil.php';
 require_once 'Scorpion/Helper/NFDataHelper.php';
+require_once 'data-helper/UrlDataHelper.php';
 
 class BaseDataHelper extends NFDataHelper {
     protected $secureActions;
+    
+    public function initialize() {
+        $this->urlHelper = new UrlDataHelper;
+    }
     
     protected function getAssets() {
         return array(
@@ -17,10 +22,6 @@ class BaseDataHelper extends NFDataHelper {
         );
     }
     
-    protected function getHomeUrl() {
-        return NFUtil::getUrl('/admin/home');
-    }
-    
     protected function getMenuUrls() {
         return null;
     }
@@ -29,9 +30,9 @@ class BaseDataHelper extends NFDataHelper {
         $isRecognizedUser = $this->session->isRecognizedUser();
         $isSecureAction = $this->isSecureAction();
         if ($isSecureAction && !$isRecognizedUser) {
-            return $this->getSignInUrl();
+            return $this->urlHelper->getSignInUrl();
         } elseif (!$isSecureAction && $isRecognizedUser) {
-            return $this->getHomeUrl();
+            return $this->urlHelper->getHomeUrl();
         } else {
             return null;
         }
@@ -39,10 +40,6 @@ class BaseDataHelper extends NFDataHelper {
 
     protected function getSecureActions() {
         return $this->scureActions;
-    }
-    
-    protected function getSignInUrl() {
-        return NFUtil::getUrl('/admin/signin');
     }
     
     protected function isSecureAction() {

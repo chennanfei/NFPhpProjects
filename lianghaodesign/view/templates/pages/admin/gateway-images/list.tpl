@@ -6,8 +6,6 @@
 
 {block name="center"}
 <div class="lh-box">
-    {include file="features/admin/page-content-title.tpl"}
-
     <div class="lh-box-inner">
         {include file="features/admin/gateway-images/list.tpl"}
     </div>

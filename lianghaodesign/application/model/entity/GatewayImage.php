@@ -44,5 +44,9 @@ class GatewayImage extends SiteImage {
     public function setSiteChannelId($channelId) {
         $this->siteChannelId = is_int($channelId) ? $channelId : (int)$channelId;
     }
+    
+    public function getDetailUrl() {
+        return NFUtil::getUrl('/gatewayImage/image?id=' . $this->getId());
+    }
 }
 ?>

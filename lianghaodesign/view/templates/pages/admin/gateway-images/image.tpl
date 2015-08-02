@@ -6,8 +6,6 @@
 
 {block name="center"}
 <div class="lh-box lh-box-form">
-    {include file="features/admin/page-content-title.tpl"}
-
     <div class="lh-box-inner">
         {include file="widgets/alert.tpl"}
         {include file="features/admin/gateway-images/form.tpl"}
