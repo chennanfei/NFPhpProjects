@@ -19,7 +19,7 @@ class ErrorController extends BaseController {
             'code' => $this->request->getParameter('code'),
             'isRecognizedUser' => $this->session->isRecognizedUser()
         ));
-        $this->displayPage('/admin/error');
+        $this->displayPage('admin/error');
     }
 }
 ?>

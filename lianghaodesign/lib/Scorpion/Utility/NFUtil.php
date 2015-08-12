@@ -38,7 +38,7 @@ class NFUtil {
     
     /* generate absolute url */
     public static function getUrl($path) {
-        return self::getBaseUrl() . "/index.php$path";
+        return self::getBaseUrl() . "/index.php/$path";
     }
     
     /* get current application name */

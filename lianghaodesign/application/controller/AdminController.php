@@ -11,11 +11,6 @@ class AdminController extends BaseController {
         $this->setPageDataFromHelper('accountPageData');
         $this->displayPage('account');
     }
-    
-    public function createProjAction() {
-        $this->setPageDataFromHelper('newProjectPageData');
-        $this->displayPage('project-edit');
-    }
 
     public function homeAction() {
         $this->setPageDataFromHelper('homePageData');

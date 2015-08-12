@@ -1,6 +1,7 @@
 <?php
 require_once 'Scorpion/Utility/NFUtil.php';
 require_once 'model/service/BaseService.php';
+require_once 'model/service/SiteChannelService.php';
 require_once 'model/entity/GatewayImage.php';
 
 class GatewayImageService extends BaseService {
@@ -18,6 +19,15 @@ class GatewayImageService extends BaseService {
     
     public function getImages() {
         $images = $this->dbService->query('select g from GatewayImage g order by g.displayOrder');
+        $channels = (new SiteChannelService)->getChannels();
+        
+        foreach ($images as $image) {
+            foreach ($channels as $chan) {
+                if ($chan->getId() == $image->getSiteChannelId()) {
+                    $image->setSiteChannel($chan);
+                }
+            }
+        }
         return $images;
     }
     

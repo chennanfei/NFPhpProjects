@@ -1,3 +1,4 @@
+<link rel="shortcut icon" href="{$favicon}">
 {foreach from=$styles item=css}
 <link type="text/css" href="{$css}" rel="stylesheet">
 {/foreach}

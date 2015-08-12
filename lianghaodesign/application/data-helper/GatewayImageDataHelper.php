@@ -52,19 +52,8 @@ class GatewayImageDataHelper extends BaseDataHelper {
     }
 
     protected function getImageListPageData() {
-        $images = (new GatewayImageService)->getImages();
-        $channels = (new SiteChannelService)->getChannels();
-        
-        foreach ($images as $image) {
-            foreach ($channels as $chan) {
-                if ($chan->getId() == $image->getSiteChannelId()) {
-                    $image->setSiteChannel($chan);
-                }
-            }
-        }
-
         return array(
-            'images' => $images,
+            'images' => (new GatewayImageService)->getImages(),
             'page' => 'gwImageList',
             'pageContentTitle' => 'Gateway images',
             'title' => 'Gateway images'

@@ -16,9 +16,10 @@ class BaseDataHelper extends NFDataHelper {
             
             // ThinkMVC has a bug that the modules depended by 'first' module are not downloaded
             // a solution is, separate thinkmvc to two parts: core and mvc. insert core part into page
-            'jqJS'   => NFUtil::getScriptUrl('lib/jquery-1.11.0.js'),
-            'libJS'  => NFUtil::getScriptUrl('lib/thinkmvc.js'),
-            'pageJS' => NFUtil::getScriptUrl('page.js')
+            'jqJS' => NFUtil::getScriptUrl('lib/jquery-1.11.0.js'),
+            'libJS' => NFUtil::getScriptUrl('lib/thinkmvc.js'),
+            'pageJS' => NFUtil::getScriptUrl('page.js'),
+            'favicon' => NFUtil::getImageUrl('favicon.ico')
         );
     }
     

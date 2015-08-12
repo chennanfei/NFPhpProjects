@@ -46,7 +46,19 @@ class GatewayImage extends SiteImage {
     }
     
     public function getDetailUrl() {
-        return NFUtil::getUrl('/gatewayImage/image?id=' . $this->getId());
+        return NFUtil::getUrl('gatewayImage/image?id=' . $this->getId());
+    }
+    
+    public function getImageUrl() {
+        return NFUtil::getImageUrl('gateway-' . $this->imageName);
+    }
+    
+    public function getChannelPageUrl() {
+        if (!isset($this->siteChannel)) {
+            return null;
+        }
+        
+        return NFUtil::getUrl(lcfirst($this->siteChannel->getEnglishName()));
     }
 }
 ?>

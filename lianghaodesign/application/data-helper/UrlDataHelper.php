@@ -3,27 +3,35 @@ require_once 'Scorpion/Utility/NFUtil.php';
 
 class UrlDataHelper {
     public function getAcountUrl() {
-        return NFUtil::getUrl('/admin/account');
+        return NFUtil::getUrl('admin/account');
     }
     
     public function getGatewayImageUrl() {
-        return NFUtil::getUrl('/gatewayImage/image');
+        return NFUtil::getUrl('gatewayImage/image');
     }
     
     public function getGatewayImagesUrl() {
-        return NFUtil::getUrl('/gatewayImage/images');
+        return NFUtil::getUrl('gatewayImage/images');
     }
     
     public function getHomeUrl() {
-        return NFUtil::getUrl('/admin/home');
+        return NFUtil::getUrl('admin/home');
+    }
+    
+    public function getLifeUrl() {
+        return NFUtil::getUrl('index/life');
     }
     
     public function getSignInUrl() {
-        return NFUtil::getUrl('/admin/signin');
+        return NFUtil::getUrl('admin/signin');
     }
     
     public function getSignOutUrl() {
-        return NFUtil::getUrl('/admin/signout');
+        return NFUtil::getUrl('admin/signout');
+    }
+    
+    public function getWorkUrl() {
+        return NFUtil::getUrl('index/work');
     }
 }
 ?>
