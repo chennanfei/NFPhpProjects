@@ -1,4 +1,4 @@
-create databse if not exists lianghao default charset utf8 collate utf8_general_ci?
+use lianghao;
 
 /* users */
 create table users (
@@ -9,13 +9,6 @@ create table users (
     primary key(id)
 ) engine=InnoDB default charset=utf8;
 
-insert into users values(
-    'liufenghua',
-    '$2y$10$8nq6YrxBqBFm/vwsTBXp/.yy8XMKb22lruzONdbv69Ls84CRGMWWu',
-    '192.168.1.6',
-    '2015-01-01 12:00:00'
-);
-
 /* site_channels */
 create table site_channels (
     id varchar(10) not null,
@@ -23,8 +16,6 @@ create table site_channels (
     chinese_title varchar(20) not null,
     primary key (id)
 ) engine=InnoDB default charset=utf8;
-
-insert into site_channels values('work', 'Work', '工作'),('life', 'Life', '生活');
 
 /* programs */
 create table programs (
@@ -36,15 +27,6 @@ create table programs (
     primary key (id),
     constraint programs_sc_id foreign key(site_channel_id) references site_channels(id)
 ) engine=InnoDB default charset=utf8;
-
-insert into programs values('guideDesign', 'Wayfinding System', 'Wayfinding System', 1, 'work'),
-    ('webDesign', 'Website Design', 'Website Design', 2, 'work'),
-    ('brandDesign', 'Branding & VI System', 'Branding & VI System', 3, 'work'),
-    ('otherDesign', 'Other Design', 'Other Design', 4, 'work'),
-    ('lifeNews', 'News', 'News', 1, 'life'),
-    ('lifeTeam', 'Team', 'Team', 2, 'life'),
-    ('lifeDays', 'Products', 'Products', 3, 'life'),
-    ('lifeDiscovery', 'Discovery', 'Discovery', 4, 'life');
 
 /* gateway_images */
 create table gateway_images (
@@ -59,9 +41,6 @@ create table gateway_images (
     constraint gwi_sc_id foreign key(site_channel_id) references site_channels(id),
     constraint gwi_uid foreign key(creator) references users(id)
 ) engine=InnoDB default charset=utf8;
-
-insert into gateway_images values(null, 'test.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 1, 'work');
-insert into gateway_images values(null, 'test2.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 2, 'work');
 
 create table projects (
     id int auto_increment not null,
@@ -81,3 +60,27 @@ create table projects (
     constraint proj_pid foreign key(program_id) references programs(id),
     constraint proj_uid foreign key(creator) references users(id)
 ) engine=InnoDB default charset=utf8;
+
+
+insert into users values(
+    'liufenghua',
+    '$2y$10$8nq6YrxBqBFm/vwsTBXp/.yy8XMKb22lruzONdbv69Ls84CRGMWWu',
+    '192.168.1.6',
+    '2015-01-01 12:00:00'
+);
+
+insert into site_channels values('work', 'Work', '工作'),('life', 'Life', '生活');
+
+insert into programs values('guideDesign', 'Wayfinding System', 'Wayfinding System', 1, 'work'),
+    ('webDesign', 'Website Design', 'Website Design', 2, 'work'),
+    ('brandDesign', 'Branding & VI System', 'Branding & VI System', 3, 'work'),
+    ('otherDesign', 'Other Design', 'Other Design', 4, 'work'),
+    ('lifeNews', 'News', 'News', 1, 'life'),
+    ('lifeTeam', 'Team', 'Team', 2, 'life'),
+    ('lifeDays', 'Products', 'Products', 3, 'life'),
+    ('lifeDiscovery', 'Discovery', 'Discovery', 4, 'life');
+
+/*
+insert into gateway_images values(null, 'test.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 1, 'work');
+insert into gateway_images values(null, 'test2.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 2, 'work');
+*/

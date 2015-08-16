@@ -1,4 +1,9 @@
-FROM index.alauda.cn/alauda/mysql:5.5
+FROM mysql:5.7
+
+RUN apt-get update && apt-get install -y vim
+
+VOLUME /var/lib/mysql
 
 COPY lianghao.sql .
-RUN mysql -uroot -p$MYSQL_ROOT_PASSWORD --default-character-set=utf-8 lianghao < lianghao.sql
+RUN mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "create database if not exists lianghao default charset utf8 collate utf8_general_ci;"
+RUN mysql -uroot -p$MYSQL_ROOT_PASSWORD --default-character-set=utf8 lianghao < lianghao.sql
