@@ -12,7 +12,7 @@ class GatewayImage extends SiteImage {
     /** @Column(type="string", name="image_name") */
     protected $imageName;
 
-    /** @Column(type="integer", name="site_channel_id") */
+    /** @Column(type="string", name="site_channel_id") */
     protected $siteChannelId;
 
     /** @Column(type="integer", name="display_order") */
@@ -42,7 +42,7 @@ class GatewayImage extends SiteImage {
     }
     
     public function setSiteChannelId($channelId) {
-        $this->siteChannelId = is_int($channelId) ? $channelId : (int)$channelId;
+        $this->siteChannelId = $channelId;
     }
     
     public function getDetailUrl() {

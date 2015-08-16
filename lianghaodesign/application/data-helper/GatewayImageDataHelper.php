@@ -9,9 +9,17 @@ class GatewayImageDataHelper extends BaseDataHelper {
     public function initialize() {
         parent::initialize();
         $this->scureActions = array(
-            'home',
             'image',
             'images',
+        );
+    }
+    
+    protected function getMenuUrls() {
+        return array(
+            'imageUrl' => $this->urlHelper->getGatewayImageUrl(),
+            'imagesUrl' => $this->urlHelper->getGatewayImagesUrl(),
+            'homeUrl' => $this->urlHelper->getHomeUrl(),
+            'signOutUrl' => $this->urlHelper->getSignOutUrl(),
         );
     }
     
@@ -92,15 +100,6 @@ class GatewayImageDataHelper extends BaseDataHelper {
         }
         $result['image'] = $image;
         return $result;
-    }
-    
-    protected function getMenuUrls() {
-        return array(
-            'imageUrl' => $this->urlHelper->getGatewayImageUrl(),
-            'imagesUrl' => $this->urlHelper->getGatewayImagesUrl(),
-            'homeUrl' => $this->urlHelper->getHomeUrl(),
-            'signOutUrl' => $this->urlHelper->getSignOutUrl(),
-        );
     }
     
     protected function getDeleteImagePageData() {

@@ -22,6 +22,14 @@ class UrlDataHelper {
         return NFUtil::getUrl('index/life');
     }
     
+    public function getProjectUrl() {
+        return NFUtil::getUrl('project/project');
+    }
+    
+    public function getProjectsUrl() {
+        return NFUtil::getUrl('project/projects');
+    }
+    
     public function getSignInUrl() {
         return NFUtil::getUrl('admin/signin');
     }

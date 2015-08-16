@@ -1,6 +1,6 @@
 /* reset */
 body {
-  font-size: 62.5%;
+  font-size: 12px;
   font-family: helvetica, arial, sans-serif;
   line-height: 1.2;
   margin: 0;
@@ -9,6 +9,10 @@ body {
 
 a {
   cursor: pointer;
+  
+  &:hover {
+    color: #FFFFFF;
+  }
 }
 
 header {
@@ -152,6 +156,10 @@ img {
 
 .tm-float-right {
   float: right !important;
+}
+
+.tm-hidden {
+    display: none;
 }
 
 .tm-no-border {
@@ -397,7 +405,7 @@ footer a, footer a:visited, footer a:hover {
 }
 
 nav {
-  font-size: 1.5em;
+  font-size: 18px;
   font-weight: bold;
   margin-top: 2.85em;
 }

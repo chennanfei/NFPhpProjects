@@ -2,6 +2,8 @@
 require_once 'controller/BaseController.php';
 
 class IndexController extends BaseController {
+    protected $checkLogin = false;
+
     protected function initialize() {
         $this->setPageTemplateRoot('/pages/site');
         parent::initialize();
@@ -13,11 +15,13 @@ class IndexController extends BaseController {
     }
     
     public function workAction() {
-        print_r('not ready');
+        $this->setPageDataFromHelper('workPageData');
+        $this->displayPage('work');
     }
     
     public function lifeAction() {
-        print_r('not ready');
+        $this->setPageDataFromHelper('lifePageData');
+        $this->displayPage('life');
     }
 }
 ?>

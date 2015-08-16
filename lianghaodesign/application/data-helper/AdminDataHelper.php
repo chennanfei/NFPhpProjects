@@ -65,7 +65,8 @@ class AdminDataHelper extends BaseDataHelper {
             'accountUrl' => $this->urlHelper->getAcountUrl(),
             'homeUrl' => $this->urlHelper->getHomeUrl(),
             'signOutUrl' => $this->urlHelper->getSignOutUrl(),
-            'imagesUrl' => $this->urlHelper->getGatewayImagesUrl()
+            'imagesUrl' => $this->urlHelper->getGatewayImagesUrl(),
+            'projectsUrl' => $this->urlHelper->getProjectsUrl(),
         );
     }
     

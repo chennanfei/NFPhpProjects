@@ -1,42 +1,51 @@
 <?php
 /**
 @Entity
-@Table(name="project")
+@Table(name="projects")
 */
 class Project {
     const STATUS_NEW = 1;
     const STATUS_PUBLISHED = 2;
 
-    /** @id @Column(type="integer", auto_increament) */
-    private $id;
+    /** @id @Column(type="integer") @GeneratedValue */
+    protected $id;
     
-    /** @Column(type="string", name="cn_address") */
+    /** @Column(type="string", name="chinese_address") */
     private $chineseAddress;
     
-    /** @Column(type="string", name="cn_description") */
+    /** @Column(type="string", name="chinese_description") */
     private $chineseDescription;
     
-    /** @Column(type="string", name="cn_title") */
+    /** @Column(type="string", name="chinese_title") */
     private $chineseTitle;
     
-    /** @Column(type="string") */
+    /** @Column(type="string", name="project_date") */
     private $date;
     
-    /** @Column(type="string", name="en_address") */
+    /** @Column(type="integer", name="display_order") */
+    private $displayOrder;
+    
+    /** @Column(type="string", name="english_address") */
     private $englishAddress;
     
-    /** @Column(type="string", name="en_description") */
+    /** @Column(type="string", name="english_description") */
     private $englishDescription;
     
-    /** @Column(type="string", name="en_title") */
+    /** @Column(type="string", name="english_title") */
     private $englishTitle;
     
-    /** @Column(type="integer") */
+    /** @Column(type="integer", name="status") */
     private $status;
     
+    /** @Column(type="string", name="program_id") */
+    private $programId;
+    
+    /** @Column(type="boolean", name="show_description") */
+    private $showDescription;
+    
+    private $contentId;
+    
     public function __construct() {
-        parent::__construct();
-        
         $this->status = self::STATUS_NEW;
     }
     
@@ -60,6 +69,10 @@ class Project {
         return $this->date;
     }
     
+    public function getDisplayOrder() {
+        return $this->displayOrder;
+    }
+    
     public function getEnglishAddress() {
         return $this->englishAddress;
     }
@@ -70,6 +83,14 @@ class Project {
     
     public function getEnglishTitle() {
         return $this->englishTitle;
+    }
+    
+    public function getProgramId() {
+        return $this->programId;
+    }
+    
+    public function getContentId() {
+        return '';
     }
     
     public function setId($id) {
@@ -92,6 +113,10 @@ class Project {
         $this->date = $date;
     }
     
+    public function setDisplayOrder($order) {
+        $this->displayOrder = $order;
+    }
+    
     public function setEnglishAddress($enAddr) {
         return $this->englishAddress = $enAddr;
     }
@@ -102,6 +127,10 @@ class Project {
     
     public function setEnglishTitle($enTitle) {
         return $this->englishTitle = $enTitle;
+    }
+    
+    public function setProgramId($programId) {
+        $this->programId = $programId;
     }
 }
 ?>

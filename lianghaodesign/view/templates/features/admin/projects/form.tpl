@@ -15,6 +15,7 @@
             </select>
         </div>
     </div>
+
     <div class="lh-row lh-input">
         <div class="lh-col3 lh-input-label">*Program:</div>
         <div class="lh-col9 lh-col-last">

@@ -45,7 +45,7 @@ class BaseDataHelper extends NFDataHelper {
     
     protected function isSecureAction() {
         if (!isset($this->scureActions)) {
-            return true;
+            return false;
         }
         return in_array($this->action, $this->scureActions);
     }

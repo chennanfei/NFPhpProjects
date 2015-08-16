@@ -4,7 +4,7 @@
 @Table(name="site_channels")
 */
 class SiteChannel {
-    /** @id @Column(type="integer") */
+    /** @id @Column(type="string") */
     private $id;
 
     /** @Column(type="string", name="chinese_title") */

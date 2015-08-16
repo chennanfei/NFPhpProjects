@@ -18,33 +18,33 @@ insert into users values(
 
 /* site_channels */
 create table site_channels (
-    id int auto_increment not null,
+    id varchar(10) not null,
     english_title varchar(20) not null,
     chinese_title varchar(20) not null,
     primary key (id)
 ) engine=InnoDB default charset=utf8;
 
-insert into site_channels values(null, 'Work', '工作'),(null, 'Life', '生活');
+insert into site_channels values('work', 'Work', '工作'),('life', 'Life', '生活');
 
 /* programs */
 create table programs (
-    id int auto_increment not null,
+    id varchar(20) not null,
     english_title varchar(20) not null,
     chinese_title varchar(20) not null,
     display_order int not null,
-    site_channel_id int not null,
+    site_channel_id varchar(10) not null,
     primary key (id),
     constraint programs_sc_id foreign key(site_channel_id) references site_channels(id)
 ) engine=InnoDB default charset=utf8;
 
-insert into programs values(null, 'Wayfinding System', 'Wayfinding System', 1, 1),
-    (null, 'Website Design', 'Website Design', 2, 1),
-    (null, 'Branding & VI System', 'Branding & VI System', 3, 1),
-    (null, 'Other Design', 'Other Design', 4, 1),
-    (null, 'News', 'News', 1, 2),
-    (null, 'Team', 'Team', 2, 2),
-    (null, 'Products', 'Products', 3, 2),
-    (null, 'Discovery', 'Discovery', 4, 2);
+insert into programs values('guideDesign', 'Wayfinding System', 'Wayfinding System', 1, 'work'),
+    ('webDesign', 'Website Design', 'Website Design', 2, 'work'),
+    ('brandDesign', 'Branding & VI System', 'Branding & VI System', 3, 'work'),
+    ('otherDesign', 'Other Design', 'Other Design', 4, 'work'),
+    ('lifeNews', 'News', 'News', 1, 'life'),
+    ('lifeTeam', 'Team', 'Team', 2, 'life'),
+    ('lifeDays', 'Products', 'Products', 3, 'life'),
+    ('lifeDiscovery', 'Discovery', 'Discovery', 4, 'life');
 
 /* gateway_images */
 create table gateway_images (
@@ -54,11 +54,30 @@ create table gateway_images (
     created_time datetime not null,
     updated_time datetime not null,
     display_order int not null,
-    site_channel_id int not null,
+    site_channel_id varchar(10) not null,
     primary key (id),
     constraint gwi_sc_id foreign key(site_channel_id) references site_channels(id),
     constraint gwi_uid foreign key(creator) references users(id)
-);
+) engine=InnoDB default charset=utf8;
 
-insert into gateway_images values(null, 'test.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 1, 1);
-insert into gateway_images values(null, 'test2.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 2, 1);
+insert into gateway_images values(null, 'test.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 1, 'work');
+insert into gateway_images values(null, 'test2.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 2, 'work');
+
+create table projects (
+    id int auto_increment not null,
+    creator varchar(20) not null,
+    chinese_address varchar(100),
+    chinese_description varchar(1000),
+    chinese_title varchar(200),
+    display_order int not null default 1,
+    english_address varchar(100),
+    english_description varchar(1000),
+    english_title varchar(200),
+    project_date varchar(12),
+    status tinyint not null default 1,
+    show_description tinyint not null default 0,
+    program_id varchar(20) not null,
+    primary key (id),
+    constraint proj_pid foreign key(program_id) references programs(id),
+    constraint proj_uid foreign key(creator) references users(id)
+) engine=InnoDB default charset=utf8;

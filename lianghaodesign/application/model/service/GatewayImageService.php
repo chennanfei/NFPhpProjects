@@ -10,9 +10,7 @@ class GatewayImageService extends BaseService {
                                          array('id' => $id));
         if (count($images) > 0) {
             return $images[0];
-        }
-        
-        if (!isset($image)) {
+        } else {
             throw new Exception('Image was not found');
         }
     }

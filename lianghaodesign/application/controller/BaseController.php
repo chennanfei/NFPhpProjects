@@ -4,15 +4,19 @@ require_once 'Scorpion/Context/NFController.php';
 require_once 'utility/Constants.php';
 
 class BaseController extends NFController {
+    protected $checkLogin = true;
+
     protected function initialize() {
         $this->setPageData(array('page' => 'home', 'title' => 'Lianghao'));
         $this->setPageDataFromHelper('assets');
         $this->setPageDataFromHelper('menuUrls');
 
         // check if redirection is needed
-        $redirectUrl = $this->getData('redirectUrl');
-        if (isset($redirectUrl)) {
-            $this->request->redirect($redirectUrl);
+        if ($this->checkLogin) {
+            $redirectUrl = $this->getData('redirectUrl');
+            if (isset($redirectUrl)) {
+                $this->request->redirect($redirectUrl);
+            }
         }
     }
     

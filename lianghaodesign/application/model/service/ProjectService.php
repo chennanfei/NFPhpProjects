@@ -1,11 +1,14 @@
 <?php
-class ProjectService {
+require_once 'model/service/BaseService.php';
+require_once 'model/entity/Project.php';
+
+class ProjectService extends BaseService {
     
     /** delete a project */
     public function deleteProject($projectID) {
         $project = $this->getProject($projectID);
         if (!isset($project)) {
-            throw new Exception("Failed to retrieve project by id $projectID");
+            throw new Exception("Failed to retrieve Project by id $projectID");
         }
         
         $this->dbService->remove($project);
@@ -22,13 +25,19 @@ class ProjectService {
         return !empty($projects) ? $projects[0] : null;
     }
     
+    public function getProjects($programId) {
+        $projects = $this->dbService->query('select p from Project p where p.programId=:pid order by p.displayOrder',
+                                            array('pid' => $programId));
+        return $projects;
+    }
+    
     /** get projects
         $args include:
             page            (optional, value is 1 by default)
             countPerPage    (optional, value is 20 by default)
     
     */
-    public function getProjects(array $args = null) {
+    public function getProjectsByPage(array $args = null) {
         $page = isset($args) && is_numeric($args['page']) ? $args['page'] : 1;
         $countPerPage = isset($args) && is_numeric($args['countPerPage']) ? $args['countPerPage'] : 20;
         

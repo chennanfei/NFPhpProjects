@@ -4,15 +4,19 @@ require_once 'model/entity/Program.php';
 require_once 'model/service/BaseService.php';
 
 class SiteChannelService extends BaseService {
+    public function getChannel($channelId) {
+        $channels = $this->dbService->query('select s from SiteChannel s where s.id=:sid',
+                                            array('sid' => $channelId));
+        if (count($channels) == 1) {
+            return $channels[0];
+        } else {
+            throw new Exception('Channel was not found');
+        }
+    }
+    
     public function getChannels() {
         $channels = $this->dbService->query('select s from SiteChannel s');
         return $channels;
-    }
-
-    public function getPrograms($channelId) {
-        $programs = $this->dbService->query('select p from Program p where p.siteChannelId=:cid order by p.displayOrder',
-            array('cid' => $channelId));
-        return $programs;
     }
 }
 ?>
