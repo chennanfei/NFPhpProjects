@@ -1,9 +1,12 @@
 <?php
+require_once 'model/entity/BaseEntity.php';
+require_once 'Scorpion/Utility/NFUtil.php';
+
 /**
 @Entity
 @Table(name="projects")
 */
-class Project {
+class Project extends BaseEntity {
     const STATUS_NEW = 1;
     const STATUS_PUBLISHED = 2;
 
@@ -11,42 +14,60 @@ class Project {
     protected $id;
     
     /** @Column(type="string", name="chinese_address") */
-    private $chineseAddress;
+    protected $chineseAddress;
     
     /** @Column(type="string", name="chinese_description") */
-    private $chineseDescription;
+    protected $chineseDescription;
     
     /** @Column(type="string", name="chinese_title") */
-    private $chineseTitle;
+    protected $chineseTitle;
     
     /** @Column(type="string", name="project_date") */
-    private $date;
+    protected $date;
     
     /** @Column(type="integer", name="display_order") */
-    private $displayOrder;
+    protected $displayOrder;
     
     /** @Column(type="string", name="english_address") */
-    private $englishAddress;
+    protected $englishAddress;
     
     /** @Column(type="string", name="english_description") */
-    private $englishDescription;
+    protected $englishDescription;
     
     /** @Column(type="string", name="english_title") */
-    private $englishTitle;
+    protected $englishTitle;
     
     /** @Column(type="integer", name="status") */
-    private $status;
+    protected $status;
     
     /** @Column(type="string", name="program_id") */
-    private $programId;
+    protected $programId;
     
     /** @Column(type="boolean", name="show_description") */
-    private $showDescription;
+    protected $showDescription;
     
-    private $contentId;
+    /** @Column(type="string", name="creator") */
+    protected $creator;
+
+    /** @Column(type="string", name="created_time") */
+    protected $createdTime;
     
-    public function __construct() {
-        $this->status = self::STATUS_NEW;
+    /** @Column(type="string", name="updated_time") */
+    protected $updatedTime;
+    
+    protected $contentId;
+    
+    public function initialize(array $data) {
+        if (!array_key_exists($data, 'status')) {
+            $data['status'] = Project::STATUS_NEW;
+        }
+        
+        if ($data['showDescription'] == 'on') {
+            $data['showDescription'] = true;
+        } else {
+            $data['showDescription'] = false;
+        }
+        parent::initialize($data);
     }
     
     public function getId() {
@@ -89,8 +110,20 @@ class Project {
         return $this->programId;
     }
     
+    public function getStatus() {
+        return $this->status;
+    }
+    
+    public function getShowDescription() {
+        return $this->showDescription;
+    }
+    
     public function getContentId() {
         return '';
+    }
+    
+    public function getDetailUrl() {
+        return NFUtil::getUrl('/project/project?id=' . $this->id);
     }
     
     public function setId($id) {
@@ -131,6 +164,14 @@ class Project {
     
     public function setProgramId($programId) {
         $this->programId = $programId;
+    }
+    
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+    
+    public function setShowDescription($showDescription) {
+        $this->showDescription = $showDescription;
     }
 }
 ?>

@@ -9,7 +9,7 @@
     <div class="lh-header">
         {block name="top"}{/block}
     </div>
-    <div class="lh-content">
+    <div class="lh-content lh-spacing-big">
         {block name="center"}{/block}
     </div>
     <div class="lh-footer">

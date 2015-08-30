@@ -13,6 +13,8 @@ class SiteChannel {
     /** @Column(type="string", name="english_title") */
     private $enlighName;
     
+    private $programs;
+    
     public function getChineseName() {
         return $this->chineseName;
     }
@@ -23,6 +25,14 @@ class SiteChannel {
     
     public function getId() {
         return $this->id;
+    }
+    
+    public function setPrograms($programs) {
+        $this->programs = $programs;
+    }
+    
+    public function getPrograms() {
+        return $this->programs;
     }
 }
 ?>

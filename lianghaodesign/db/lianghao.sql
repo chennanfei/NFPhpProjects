@@ -56,6 +56,8 @@ create table projects (
     status tinyint not null default 1,
     show_description tinyint not null default 0,
     program_id varchar(20) not null,
+    created_time datetime not null,
+    updated_time datetime not null,
     primary key (id),
     constraint proj_pid foreign key(program_id) references programs(id),
     constraint proj_uid foreign key(creator) references users(id)

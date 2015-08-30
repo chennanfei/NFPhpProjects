@@ -9,7 +9,7 @@
     <div class="lh-header">
         {include file="features/admin/header-small.tpl"}
     </div>
-    <div class="lh-content">
+    <div class="lh-content lh-spacing-big">
         {include file="features/admin/page-content-title.tpl"}
         <div class="lh-row lh-spacing-top-big">
             <div class="lh-col3">

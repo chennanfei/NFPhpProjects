@@ -38,6 +38,7 @@ class NFUtil {
     
     /* generate absolute url */
     public static function getUrl($path) {
+        $path = preg_replace('/^(\/+)/', '', $path);
         return self::getBaseUrl() . "/index.php/$path";
     }
     

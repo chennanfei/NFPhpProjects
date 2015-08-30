@@ -203,10 +203,19 @@ textarea {
         font-weight: bold;
         font-size: 14px;
         margin-bottom: 10px;
+        padding: 0 8px;
     }
     
     .lh-list-item {
-        margin: 8px 0;
+        border: 1px solid #FFF;
+        padding: 8px;
+        
+        &:hover {
+            border: 1px solid #000;
+        }
+        &:nth-child(odd) {
+            background-color: #EEE;
+        }
     }
 }
 

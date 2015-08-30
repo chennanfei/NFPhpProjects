@@ -7,6 +7,7 @@
 {block name="center"}
 <div class="lh-box">
     <div class="lh-box-inner">
+        {include file="features/admin/projects/programs.tpl"}
         {include file="features/admin/projects/list.tpl"}
     </div>
 </div>

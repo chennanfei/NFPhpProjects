@@ -4,11 +4,11 @@ require_once 'model/entity/Project.php';
 
 class ProjectService extends BaseService {
     
-    /** delete a project */
-    public function deleteProject($projectID) {
-        $project = $this->getProject($projectID);
+    /** remove a project */
+    public function removeProject($projectId) {
+        $project = $this->getProject($projectId);
         if (!isset($project)) {
-            throw new Exception("Failed to retrieve Project by id $projectID");
+            throw new Exception("Failed to retrieve Project by id $projectId");
         }
         
         $this->dbService->remove($project);
@@ -67,14 +67,25 @@ class ProjectService extends BaseService {
             enDescription   (optional)
             enTitle         (required)
     */
-    public function saveProject(array $args) {
+    public function saveProject(array $data) {
+        $time = NFUtil::now();
+        $data['updatedTime'] = $time;
+        if (array_key_exists('id', $data)) {
+            $project = $this->getProject($data['id']);
+            $project->initialize($data);
+        } else {
+            $project = new Project;
+            $data['createdTime'] = $time;
+            $project->initialize($data);
+        }
         
+        if ($project->isValid()) {
+            $this->dbService->save($project);
+        }
+        
+        return $project;
     }
     
-    
-    private function validateParameters(array $args) {
-        
-    }
 }
 
 ?>

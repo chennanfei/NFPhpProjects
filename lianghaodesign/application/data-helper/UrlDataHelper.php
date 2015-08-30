@@ -26,8 +26,19 @@ class UrlDataHelper {
         return NFUtil::getUrl('project/project');
     }
     
-    public function getProjectsUrl() {
-        return NFUtil::getUrl('project/projects');
+    public function getProjectsUrl($channelId, $programId) {
+        $params = null;
+        if ($channelId && $programId) {
+            $params = "ch=$channelId&pg=$programId";
+        } elseif ($channelId) {
+            $params = "ch=$channelId";
+        }
+        
+        if (isset($params)) {
+            return NFUtil::getUrl("project/projects?$params");
+        } else {
+            return NFUtil::getUrl("project/projects");
+        }
     }
     
     public function getSignInUrl() {

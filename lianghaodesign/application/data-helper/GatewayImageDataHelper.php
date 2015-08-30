@@ -51,7 +51,6 @@ class GatewayImageDataHelper extends BaseDataHelper {
         $result = array('image' => $image, 'nextUrl' => null);
         if ($image->isValid()) {
             $result['nextUrl'] = $this->urlHelper->getGatewayImagesUrl();
-            return $result;
         } else {
             $result['errors'] = $image->getErrors();
             $result['messageType'] = 'error';

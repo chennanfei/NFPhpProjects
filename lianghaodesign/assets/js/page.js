@@ -36,6 +36,11 @@ TM.configure({
             module: 'first'
         },
         
+        projectList: {
+            controller: 'controller.ProjectListController',
+            module: 'first'
+        },
+        
         signIn: {
             controller: 'controller.SignInController',
             module: 'first'
@@ -166,13 +171,23 @@ TM.declare('controller.HomeController').inherit('thinkmvc.Controller').extend({}
 // project
 TM.declare('controller.ProjectController').inherit('thinkmvc.Controller').extend({
     events: {
-        'change select[name=channel]': 'displayPrograms'
+        'change select[name=channelId]': 'displayPrograms'
     },
     
     rootNode: '#projectForm',
     
     selectors: {
-        programSel: 'select[name=program]'
+        programSel: 'select[name=programId]',
+        channelSel: 'select[name=channelId]'
+    },
+    
+    initialize: function() {
+        this.invoke('thinkmvc.Controller:initialize');
+        
+        var channelId = this._$root.data('channelId');
+        if (channelId) {
+            this._el.$channelSel.val(channelId).change();
+        }
     },
     
     displayPrograms: function(event) {
@@ -193,6 +208,28 @@ TM.declare('controller.ProjectController').inherit('thinkmvc.Controller').extend
         if (!isFound) {
             $sel.val($sel.find('option:first').val());
         }
+    },
+});
+
+TM.declare('controller.ProjectListController').inherit('thinkmvc.Controller').extend({
+    events: {
+        'click a.lh-action-delete': 'deleteProject'
+    },
+    
+    rootNode: '#projList',
+    
+    deleteProject: function(event) {
+        if (!confirm('Do you really want to delete this project?')) {
+            return;
+        }
+        var data = $(event.currentTarget).data();
+        var urlParams = ['a=delete'];
+        for (var k in data) {
+            if (k != 'url') {
+                urlParams.push(k + '=' + data[k]);
+            }
+        }
+        window.location.href = data['url'] + '&' + urlParams.join('&');
     }
 });
 

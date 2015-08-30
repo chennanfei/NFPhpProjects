@@ -28,3 +28,22 @@
         }
     }
 }
+
+.lh-menu-programs {
+    background-color: black;
+    padding: 0;
+
+    li {
+        display: inline-block;
+        list-style-type: none;
+        padding: 10px;
+
+        a {
+            color: white;
+            padding: 10px;
+        }
+        &:hover, &.selected {
+            background-color: #333;
+        }
+    }
+}

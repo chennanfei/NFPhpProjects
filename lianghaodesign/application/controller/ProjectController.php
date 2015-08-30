@@ -50,8 +50,12 @@ class ProjectController extends BaseController {
     
     private function deleteProject() {
         $data = $this->getData('deleteProjectPageData');
-        $this->setPageData($data);
-        $this->displayPage('list');
+        if (isset($data['nextUrl'])) {
+            $this->request->redirect($data['nextUrl']);
+        } else {
+            $this->setPageData($data);
+            $this->displayPage('list');
+        }
     }
     
     public function projectsAction() {

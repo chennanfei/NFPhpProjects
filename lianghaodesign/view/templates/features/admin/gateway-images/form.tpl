@@ -1,11 +1,5 @@
 <form id="gatewayImageForm" class="lh-form" action="{$imageUrl}" method="post">
-    {if $image->getCreatedTime()}
-    <div class="lh-row lh-color-secondary lh-spacing-big">
-        <div class="lh-col3-offset lh-col9 lh-col-last">
-            Created at {$image->getCreatedTime()}, updated at {$image->getUpdatedTime()}
-        </div>
-    </div>
-    {/if}
+    {include file="features/admin/entry-times.tpl" entry=$image}
 
     {include file="features/admin/channel-select.tpl"}
     <input type="hidden" name="a" value="{$action}"/>
