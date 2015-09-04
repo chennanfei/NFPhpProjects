@@ -81,8 +81,3 @@ insert into programs values('guideDesign', 'Wayfinding System', 'Wayfinding Syst
     ('lifeTeam', 'Team', 'Team', 2, 'life'),
     ('lifeDays', 'Products', 'Products', 3, 'life'),
     ('lifeDiscovery', 'Discovery', 'Discovery', 4, 'life');
-
-/*
-insert into gateway_images values(null, 'test.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 1, 'work');
-insert into gateway_images values(null, 'test2.jpg', 'liufenghua', '2015-01-01 12:00:00', '2015-01-01 12:00:00', 2, 'work');
-*/

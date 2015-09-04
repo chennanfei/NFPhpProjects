@@ -113,8 +113,8 @@ class ProjectDataHelper extends BaseDataHelper {
             $result = array();
         }
         
+        $projectId = $this->request->getParameter('id');
         if (!array_key_exists('project', $result)) {
-            $projectId = $this->request->getParameter('id');
             $result['project'] = (new ProjectService)->getProject($projectId);
         }
         
@@ -125,6 +125,9 @@ class ProjectDataHelper extends BaseDataHelper {
         $result['page'] = 'project';
         $result['pageContentTitle'] = 'Update project';
         $result['title'] = 'Update project';
+        
+        $result['previewedImagesUrl'] = $this->urlHelper->getPreviewedProjectImagesUrl($projectId);
+        $result['projectImagesUrl'] = $this->urlHelper->getProjectImagesUrl($projectId);
         return $result;
     }
     

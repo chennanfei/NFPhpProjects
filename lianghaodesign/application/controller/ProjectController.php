@@ -62,5 +62,13 @@ class ProjectController extends BaseController {
         $this->setPageDataFromHelper('projectListPageData');
         $this->displayPage('list');
     }
+    
+    public function imagesAction() {
+        
+    }
+    
+    public function previewedImagesAction() {
+        
+    }
 }
 ?>

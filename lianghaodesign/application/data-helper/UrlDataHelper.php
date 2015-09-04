@@ -26,6 +26,22 @@ class UrlDataHelper {
         return NFUtil::getUrl('project/project');
     }
     
+    public function getPreviewedProjectImagesUrl($projectId) {
+        if (isset($projectId)) {
+            return NFUtil::getUrl("project/previewedImages?projectId=$projectId");    
+        } else {
+            return NFUtil::getUrl("project/previewedImages");
+        }
+    }
+    
+    public function getProjectImagesUrl($projectId) {
+        if (isset($projectId)) {
+            return NFUtil::getUrl("project/images?projectId=$projectId");    
+        } else {
+            return NFUtil::getUrl("project/images");
+        }
+    }
+    
     public function getProjectsUrl($channelId, $programId) {
         $params = null;
         if ($channelId && $programId) {

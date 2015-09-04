@@ -5,7 +5,7 @@ require_once 'model/entity/SiteImage.php';
 @Entity
 @Table(name="project_images")
 */
-class ProjectImage extends SiteImage {
+class ProjectPreviewedImage extends SiteImage {
     /** @id @Column(type="integer") @GeneratedValue */
     protected $id;
     
@@ -28,7 +28,7 @@ class ProjectImage extends SiteImage {
     protected $updatedTime;
 
     public function getImageUrl() {
-        return NFUtil::getImageUrl('project-' . $this->imageName);
+        return NFUtil::getImageUrl('project-previewed-' . $this->imageName);
     }
 }
 ?>
