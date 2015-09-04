@@ -17,6 +17,9 @@ class ProjectImage extends SiteImage {
 
     /** @Column(type="integer", name="display_order") */
     protected $displayOrder;
+    
+    /** @Column(type="string", name="display_position") */
+    protected $displayPosition;
 
     /** @Column(type="string", name="creator") */
     protected $creator;
@@ -26,9 +29,53 @@ class ProjectImage extends SiteImage {
     
     /** @Column(type="string", name="updated_time") */
     protected $updatedTime;
+    
+    /** @Column(type="boolean", name="is_previewed") */
+    protected $isPreviewed;
+    
+    /** @Column(type="boolean", name="is_half") */
+    protected $isHalf;
+    
+    public function getIsPreviewed() {
+        return $this->isPreviewed;
+    }
+    
+    public function getIsHalf() {
+        return $this->isHalf;
+    }
+    
+    public function getDisplayPosition() {
+        return $this->displayPosition;
+    }
+    
+    public function getProjectId() {
+        return $this->projectId;
+    }
+    
+    public function setIsPreviewed($isPreviewed) {
+        $this->isPreviewed = $isPreviewed;
+    }
+    
+    public function setIsHalf($isHalf) {
+        $this->isHalf = $isHalf;
+    }
+    
+    public function setDisplayPosition($displayPosition) {
+        $this->displayPosition = $displayPosition;
+    }
+    
+    public function setProjectId($projectId) {
+        $this->projectId = $projectId;
+    }
 
     public function getImageUrl() {
         return NFUtil::getImageUrl('project-' . $this->imageName);
+    }
+    
+    public function getDetailUrl() {
+        $id = $this->id;
+        $projectId = $this->projectId;
+        return NFUtil::getUrl("/project/images?imageId=$id&projectId=$projectId");
     }
 }
 ?>

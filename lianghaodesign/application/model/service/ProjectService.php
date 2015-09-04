@@ -1,6 +1,7 @@
 <?php
 require_once 'model/service/BaseService.php';
 require_once 'model/entity/Project.php';
+require_once 'model/entity/ProjectImage.php';
 
 class ProjectService extends BaseService {
     
@@ -84,6 +85,37 @@ class ProjectService extends BaseService {
         }
         
         return $project;
+    }
+    
+    public function getImages($projectId, $isPreviewed) {
+        $sql = 'select i from ProjectImage i where i.projectId=:pid and i.isPreviewed=:ip order by i.displayOrder';
+        $images = $this->dbService->query($sql, array('pid' => $projectId, 'ip' => $isPreviewed));
+        return $images;
+    }
+    
+    public function getImage($imageId) {
+        $sql = 'select i from ProjectImage i where i.id=:id';
+        $images = $this->dbService->query($sql, array(id => $imageId));
+        return !empty($images) ? $images[0] : null;
+    }
+    
+    public function saveImage(array $data) {
+        $time = NFUtil::now();
+        $data['updatedTime'] = $time;
+        if (array_key_exists('id', $data)) {
+            $image = $this->getImage($data['id']);
+            $image->initialize($data);
+        } else {
+            $image = new ProjectImage;
+            $data['createdTime'] = $time;
+            $image->initialize($data);
+        }
+        
+        if ($image->isValid()) {
+            $this->dbService->save($image);
+        }
+        
+        return $image;
     }
     
 }

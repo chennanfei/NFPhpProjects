@@ -47,3 +47,16 @@
         }
     }
 }
+
+.lh-project-info {
+    padding-left: 0; 
+    li {
+        display: inline;
+        padding: 0 10px;
+        list-style-type: none;
+        
+        &:first-child {
+            padding-left: 0; 
+        }
+    }
+}

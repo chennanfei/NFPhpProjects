@@ -12,11 +12,11 @@
     </ul>
 </div>
 
-{if $previewedImagesUrl}
+{if $projectImagesUrl}
 <div class="lh-box lh-spacing-top-big">
     <ul class="lh-box-inner lh-menu">
         <li class="lh-menu-item">
-            <a class="lh-menu-item-link" href="{$previewedImagesUrl}">View project previewed images</a>
+            <a class="lh-menu-item-link" href="{$projectImagesUrl}&preview=1">View previewed images</a>
         </li>
         <li class="lh-menu-item">
             <a class="lh-menu-item-link" href="{$projectImagesUrl}">View project images</a>

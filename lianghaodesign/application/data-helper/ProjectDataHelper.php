@@ -4,6 +4,7 @@ require_once 'model/service/ProjectService.php';
 require_once 'model/service/SiteChannelService.php';
 require_once 'model/service/ProgramService.php';
 require_once 'model/entity/Project.php';
+require_once 'model/entity/ProjectImage.php';
  
 class ProjectDataHelper extends BaseDataHelper {
     public function initialize() {
@@ -11,6 +12,7 @@ class ProjectDataHelper extends BaseDataHelper {
         $this->scureActions = array(
             'project',
             'projects',
+            'images',
         );
     }
     
@@ -126,7 +128,6 @@ class ProjectDataHelper extends BaseDataHelper {
         $result['pageContentTitle'] = 'Update project';
         $result['title'] = 'Update project';
         
-        $result['previewedImagesUrl'] = $this->urlHelper->getPreviewedProjectImagesUrl($projectId);
         $result['projectImagesUrl'] = $this->urlHelper->getProjectImagesUrl($projectId);
         return $result;
     }
@@ -147,6 +148,76 @@ class ProjectDataHelper extends BaseDataHelper {
             $result['messageType'] = 'error';
         }
         return $result;
+    }
+    
+    protected function getProjectImagesPageData() {
+        $projectId = $this->request->getParameter('projectId');
+        $imageId = $this->request->getParameter('imageId');
+        $isPreviewed = $this->request->getParameter('preview') == 1 ? 1 : 0;
+        
+        $result = array();
+        $result['projectImagesUrl'] = $this->urlHelper->getProjectImagesUrl($projectId);
+        $result['page'] = 'project';
+        $result['pageContentTitle'] = $isPreviewed ? 'Previewed images' : 'Project images';
+        $result['title'] = 'Project images';
+
+        $projectSrv = new ProjectService;
+        try {
+            $result['project'] = $projectSrv->getProject($projectId);
+            $result['images'] = $projectSrv->getImages($projectId, $isPreviewed);
+        } catch (Exception $e) {
+            $result['message'] = $e->getMessage();
+            $result['messageType'] = 'error';
+            return $result;
+        }
+        
+        if (isset($imageId)) {
+            $result['image'] = $projectSrv->getImage($imageId);
+            $result['action'] = 'update';
+        } else {
+            $result['image'] = $this->getEmptyImage($isPreviewed);
+            $result['action'] = 'add';
+        }
+        
+        return $result;   
+    }
+    
+    private function getEmptyImage($isPreviewed) {
+        $image = new ProjectImage;
+        $image->setIsHalf(0);
+        $image->setIsPreviewed($isPreviewed);
+        $image->setDisplayPosition('center');
+        return $image;
+    }
+    
+    protected function getAddProjectImagePageData() {
+        $data = $this->request->getParameters();
+        $data['creator'] = $this->session->getUserID();
+        try {
+            $image = (new ProjectService)->saveImage($data);
+            $result = array('image' => $image, 'nextUrl' => null);
+            if ($image->isValid()) {
+                $result['nextUrl'] = $this->urlHelper->getProjectImagesUrl($projectId);
+                if ($data['isPreviewed']) {
+                    $result['nextUrl'] = $result['nextUrl'] . '&preview=1';
+                }
+            } else {
+                $result['errors'] = $image->getErrors();
+                $result['messageType'] = 'error';
+            }
+        } catch (Exception $e) {
+            $result = array('messageType' => 'error', 'message' => $e->getMessage());
+        }
+        
+        return $result;
+    }
+    
+    private function updateImage() {
+        
+    }
+    
+    private function deleteImage() {
+        
     }
     
     private function addProject() {

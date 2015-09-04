@@ -63,6 +63,21 @@ create table projects (
     constraint proj_uid foreign key(creator) references users(id)
 ) engine=InnoDB default charset=utf8;
 
+create table project_images (
+    id int auto_increment not null,
+    image_name varchar(120) not null,
+    creator varchar(20) not null,
+    created_time datetime not null,
+    updated_time datetime not null,
+    display_order int not null,
+    display_position varchar(10) not null default 'center',
+    project_id varchar(20) not null,
+    is_previewed boolean not null default 0,
+    is_half boolean not null default 0,
+    primary key (id),
+    constraint project_images_uid foreign key(creator) references users(id)
+) engine=InnoDB default charset=utf8;
+
 
 insert into users values(
     'liufenghua',

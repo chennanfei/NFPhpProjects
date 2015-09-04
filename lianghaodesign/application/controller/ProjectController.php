@@ -64,11 +64,28 @@ class ProjectController extends BaseController {
     }
     
     public function imagesAction() {
+        $action = $this->request->getParameter('a');
+        switch ($action) {
+            case 'add':
+                $data = $this->getData('addProjectImagePageData');
+                break;
+            case 'update':
+                $data = $this->getData('updateProjectImagePageData');
+                break;
+            case 'delete':
+                $data = $this->getData('deleteProjectImagePageData');
+                break;
+            default:
+                $data = array();
+        }
         
-    }
-    
-    public function previewedImagesAction() {
-        
+        if (isset($data['nextUrl'])) {
+            $this->request->redirect($data['nextUrl']);
+        } else {
+            $data = array_merge($data, $this->getData('projectImagesPageData'));
+            $this->setPageData($data);
+            $this->displayPage('images');
+        }
     }
 }
 ?>
