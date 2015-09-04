@@ -45,4 +45,12 @@
             </div>
         </div>
     </form>
+    
+    <div class="lh-col4 lh-col-last">
+        {if $image->getId()}
+        <div class="lh-project-image">
+            <img src="{$image->getImageUrl()}">
+        </div>
+        {/if}
+    </div>
 </div>

@@ -155,31 +155,29 @@ class ProjectDataHelper extends BaseDataHelper {
         $imageId = $this->request->getParameter('imageId');
         $isPreviewed = $this->request->getParameter('preview') == 1 ? 1 : 0;
         
+        try {
+            $result = $this->initializeImagesPage($projectId, $isPreviewed);
+        } catch (Exception $e) {
+            return array('message' => $e->getMessage(), 'messageType' => 'error');
+        }
+        
+        $result['image'] = $this->getEmptyImage($isPreviewed);
+        $result['action'] = 'add';
+        return $result;   
+    }
+    
+    private function initializeImagesPage($projectId, $isPreviewed) {
         $result = array();
         $result['projectImagesUrl'] = $this->urlHelper->getProjectImagesUrl($projectId);
         $result['page'] = 'project';
         $result['pageContentTitle'] = $isPreviewed ? 'Previewed images' : 'Project images';
         $result['title'] = 'Project images';
+        
+        $service = new ProjectService;
+        $result['images'] = $service->getImages($projectId, $isPreviewed);
+        $result['project'] = $service->getProject($projectId);
 
-        $projectSrv = new ProjectService;
-        try {
-            $result['project'] = $projectSrv->getProject($projectId);
-            $result['images'] = $projectSrv->getImages($projectId, $isPreviewed);
-        } catch (Exception $e) {
-            $result['message'] = $e->getMessage();
-            $result['messageType'] = 'error';
-            return $result;
-        }
-        
-        if (isset($imageId)) {
-            $result['image'] = $projectSrv->getImage($imageId);
-            $result['action'] = 'update';
-        } else {
-            $result['image'] = $this->getEmptyImage($isPreviewed);
-            $result['action'] = 'add';
-        }
-        
-        return $result;   
+        return $result;
     }
     
     private function getEmptyImage($isPreviewed) {
@@ -212,8 +210,22 @@ class ProjectDataHelper extends BaseDataHelper {
         return $result;
     }
     
-    private function updateImage() {
+    protected function getUpdateProjectImagePageData() {
+        $imageId = $this->request->getParameter('id');
+        $service = new ProjectService;
+        $image = $service->getImage($imageId);
+        $projectId = $image->getProjectId();
+        $result = $this->initializeImagesPage($projectId, $image->getIsPreviewed());
+        $result['action'] = 'update';
+        if ($this->request->isPost()) {
+            $data = $this->request->getParameters();
+            $result['image'] = $service->saveImage($data);
+            $result['message'] = 'Successfully saved the image';
+        } else {
+            $result['image'] = $image;
+        }
         
+        return $result;
     }
     
     private function deleteImage() {

@@ -37,7 +37,7 @@ class ProjectImage extends SiteImage {
     protected $isHalf;
     
     public function getIsPreviewed() {
-        return $this->isPreviewed;
+        return $this->isPreviewed ? 1 : 0;
     }
     
     public function getIsHalf() {
@@ -75,7 +75,7 @@ class ProjectImage extends SiteImage {
     public function getDetailUrl() {
         $id = $this->id;
         $projectId = $this->projectId;
-        return NFUtil::getUrl("/project/images?imageId=$id&projectId=$projectId");
+        return NFUtil::getUrl("/project/images?id=$id");
     }
 }
 ?>

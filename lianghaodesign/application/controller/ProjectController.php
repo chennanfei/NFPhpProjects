@@ -76,13 +76,12 @@ class ProjectController extends BaseController {
                 $data = $this->getData('deleteProjectImagePageData');
                 break;
             default:
-                $data = array();
+                $data = $this->getData('projectImagesPageData');
         }
         
         if (isset($data['nextUrl'])) {
             $this->request->redirect($data['nextUrl']);
         } else {
-            $data = array_merge($data, $this->getData('projectImagesPageData'));
             $this->setPageData($data);
             $this->displayPage('images');
         }

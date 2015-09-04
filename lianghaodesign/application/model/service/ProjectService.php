@@ -102,6 +102,7 @@ class ProjectService extends BaseService {
     public function saveImage(array $data) {
         $time = NFUtil::now();
         $data['updatedTime'] = $time;
+        $data['isPreviewed'] = $data['isPreviewed'] == 1 ? 1 : 0;
         if (array_key_exists('id', $data)) {
             $image = $this->getImage($data['id']);
             $image->initialize($data);
