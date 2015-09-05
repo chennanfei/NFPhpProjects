@@ -2,12 +2,14 @@ TM.configure({
     baseUrl: 'assets/js',
     
     dependencies: {
-        //first: ['jquery']
+        //first: ['jquery'],
+        //jqueryForm: ['jquery']
     },
     
     modules: {
         first: 'page.js',
-        jquery: 'lib/jquery-1.11.0.js'
+        jquery: 'lib/jquery-1.11.0.js',
+        jqueryForm: 'lib/jquery.form.min.js'
     },
     
     pages: {
@@ -43,7 +45,7 @@ TM.configure({
         
         projectImageList: {
             controller: 'controller.ProjectImageListController',
-            module: 'first'
+            module: 'jqueryForm'
         },
         
         signIn: {
@@ -176,14 +178,14 @@ TM.declare('controller.HomeController').inherit('thinkmvc.Controller').extend({}
 // project
 TM.declare('controller.ProjectController').inherit('thinkmvc.Controller').extend({
     events: {
-        'change select[name=channelId]': 'displayPrograms'
+        'change select[name=channelId]': 'displayPrograms',
     },
     
     rootNode: '#projectForm',
     
     selectors: {
         programSel: 'select[name=programId]',
-        channelSel: 'select[name=channelId]'
+        channelSel: 'select[name=channelId]',
     },
     
     initialize: function() {
@@ -218,7 +220,7 @@ TM.declare('controller.ProjectController').inherit('thinkmvc.Controller').extend
 
 TM.declare('controller.ProjectListController').inherit('thinkmvc.Controller').extend({
     events: {
-        'click a.lh-delete-project': 'deleteProject'
+        'click a.lh-delete-project': 'deleteProject',
     },
     
     rootNode: '#projectList',
@@ -248,10 +250,15 @@ TM.declare('controller.ProjectListController').inherit('thinkmvc.Controller').ex
 
 TM.declare('controller.ProjectImageListController').inherit('thinkmvc.Controller').extend({
     events: {
-        'click a.lh-delete-image': 'deleteImage'
+        'click a.lh-delete-image': 'deleteImage',
     },
     
     rootNode: '#projectImageList',
+    
+    initialize: function() {
+        this.invoke('thinkmvc.Controller:initialize');
+        this.U.createInstance('controller.ImageUploadController');
+    },
     
     deleteImage: function(event) {
         if (!confirm('Do you really want to delete this image?')) {
@@ -272,6 +279,43 @@ TM.declare('controller.ProjectImageListController').inherit('thinkmvc.Controller
                 $target.parents('div.lh-list-item').remove();
             }
         });
+    }
+});
+
+TM.declare('controller.ImageUploadController').inherit('thinkmvc.Controller').extend({
+    events: {
+        'change input[name=uploadedImage]': 'uploadImage'
+    },
+    
+    selectors: {
+        imageType: 'input[name=imageType]',
+        imageName: 'input[name=imageName]',
+        previewedImage: '#previewedImage',
+        uploadForm: '#imageUploadForm',
+        spinner: '#uploadSpinner',
+    },
+    
+    uploadImage: function(event) {
+        var el = this._el;
+        el.$uploadForm.ajaxForm({
+            target: '#previewedImage',
+            
+            beforeSubmit: function() {
+                el.$spinner.show();
+            },
+            
+            complete: function() {
+                el.$spinner.hide();
+            },
+            
+            success: function(text) {
+                console.log(text);
+                var data = el.$previewedImage.find('img').data();
+                if (data) {
+                    el.$imageName.val(data.imageName);
+                }
+            }
+        }).submit();
     }
 });
 

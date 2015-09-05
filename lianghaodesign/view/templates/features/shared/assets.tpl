@@ -4,7 +4,11 @@
 {/foreach}
 
 {if $jqJS}
-<script type="text/javascript" src="{$jqJS}"></script>
+<script id="jquery" type="text/javascript" src="{$jqJS}"></script>
+{/if}
+
+{if $jqFormJS}
+<script id="jqueryForm" type="text/javascript" src="{$jqFormJS}" async="async"></script>
 {/if}
 
 {if $pageJS}

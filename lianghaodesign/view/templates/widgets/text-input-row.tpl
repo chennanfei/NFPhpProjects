@@ -9,7 +9,9 @@
 {/if}
 
 <div class="lh-row lh-input">
+    {if $input_label}
     <div class="lh-col{$left_col} lh-input-label">{$input_label}:</div>
+    {/if}
     <div class="lh-col{$right_col} lh-col-last">
         {if $input_type eq 'textarea'}
         <textarea name="{$input_name}">{$input_value}</textarea>
@@ -17,8 +19,10 @@
         <input class="lh-input-text" type="{$input_type}" name="{$input_name}"
             {if $input_value}checked="checked"{/if}>
         {else}
-        <input class="lh-input-text" type="{$input_type}" name="{$input_name}" placeholder="{$placeholder}"
+        <input class="lh-input-text" type="{$input_type}" name="{$input_name}"
+            {if $placeholder}placeholder="{$placeholder}"{/if}
             {if $input_value}value="{$input_value}"{/if}
+            {if $readonly}readonly{/if}
             {if $auto_focus}autofocus{/if}>
         {/if}
     </div>

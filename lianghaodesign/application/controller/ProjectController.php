@@ -1,5 +1,6 @@
 <?php
 require_once 'controller/BaseController.php';
+require_once 'Scorpion/Utility/NFUtil.php';
 
 class ProjectController extends BaseController {
     protected function initialize() {

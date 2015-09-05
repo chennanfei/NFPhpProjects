@@ -60,5 +60,9 @@ class UrlDataHelper {
     public function getWorkUrl() {
         return NFUtil::getUrl('index/work');
     }
+    
+    public function getUploadImageUrl() {
+        return NFUtil::getUrl('/imageUpload');
+    }
 }
 ?>

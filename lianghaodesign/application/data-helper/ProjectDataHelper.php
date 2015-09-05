@@ -24,6 +24,7 @@ class ProjectDataHelper extends BaseDataHelper {
             'projectsUrl' => $this->urlHelper->getProjectsUrl(),
             'homeUrl' => $this->urlHelper->getHomeUrl(),
             'signOutUrl' => $this->urlHelper->getSignOutUrl(),
+            'uploadImageUrl' => $this->urlHelper->getUploadImageUrl(),
         );
     }
     
@@ -179,6 +180,7 @@ class ProjectDataHelper extends BaseDataHelper {
         $image->setIsHalf(0);
         $image->setIsPreviewed($isPreviewed);
         $image->setDisplayPosition('center');
+        $image->setDisplayOrder(1);
         return $image;
     }
     
@@ -204,10 +206,7 @@ class ProjectDataHelper extends BaseDataHelper {
         
         $result = array();
         if ($image->isValid()) {
-            $result['nextUrl'] = $this->urlHelper->getProjectImagesUrl($data['projectId']);
-            if ($data['isPreviewed']) {
-                $result['nextUrl'] = $result['nextUrl'] . '&preview=1';
-            }
+            $result['nextUrl'] = $this->getImageNextUrl($data['projectId'], $data['isPreviewed']);
         } else {
             $result['errors'] = $image->getErrors();
             $result['messageType'] = 'error';
@@ -216,10 +215,25 @@ class ProjectDataHelper extends BaseDataHelper {
         return $result;
     }
     
+    private function getImageNextUrl($projectId, $isPreviewed) {
+        $nextUrl = $this->urlHelper->getProjectImagesUrl($projectId);
+        if ($isPreviewed) {
+            $nextUrl = "$nextUrl&preview=1";
+        }
+        return $nextUrl;
+    }
+    
     protected function getUpdateProjectImagePageData() {
         $imageId = $this->request->getParameter('id');
+        $isPreviewed = $this->request->getParameter('isPreviewed');
+        $projectId = $this->request->getParameter('pid');
+        $isPreviewed = $this->request->getParameter('ip');
+        
         $service = new ProjectService;
         $image = $service->getImage($imageId);
+        if (!$image) {
+            //return array('nextUrl' => $this->getImageNextUrl($projectId, $isPreviewed));
+        }
         $projectId = $image->getProjectId();
         $result = $this->initializeImagesPage($projectId, $image->getIsPreviewed());
         $result['action'] = 'update';

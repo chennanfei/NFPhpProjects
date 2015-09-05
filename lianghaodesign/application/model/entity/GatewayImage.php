@@ -11,7 +11,7 @@ class GatewayImage extends SiteImage {
     
     /** @Column(type="string", name="image_name") */
     protected $imageName;
-
+    
     /** @Column(type="string", name="site_channel_id") */
     protected $siteChannelId;
 
@@ -47,10 +47,6 @@ class GatewayImage extends SiteImage {
     
     public function getDetailUrl() {
         return NFUtil::getUrl('gatewayImage/image?id=' . $this->getId());
-    }
-    
-    public function getImageUrl() {
-        return NFUtil::getImageUrl('gateway-' . $this->imageName);
     }
     
     public function getChannelPageUrl() {

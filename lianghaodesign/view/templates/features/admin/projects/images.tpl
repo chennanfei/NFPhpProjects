@@ -19,7 +19,8 @@
             <a class="lh-action-edit" href="{$image->getDetailUrl()}&a=update">Edit</a>
             <a class="lh-action-delete lh-delete-image" href="javascript:void(0);"
                 data-url="{$image->getDetailUrl()}"
-                data-pid="{$image->getProjectId()}">Delete</a>
+                data-pid="{$image->getProjectId()}"
+                data-ip="{$image->getIsPreviewed()}">Delete</a>
         </div>
     </div>
         {/foreach}
