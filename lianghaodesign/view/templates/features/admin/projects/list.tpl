@@ -1,4 +1,4 @@
-<div id="projList" class="lh-list">
+<div class="lh-list">
     {if $projects}
     <div class="lh-row lh-list-head">
         <div class="lh-col4">Name</div>
@@ -15,7 +15,7 @@
         <div class="lh-col2">{$proj->getDate()}</div>
         <div class="lh-col2 lh-col-last lh-actions">
             <a class="lh-action-edit" href="{$proj->getDetailUrl()}&a=update">Edit</a>
-            <a class="lh-action-delete" href="javascript:void(0);"
+            <a class="lh-action-delete lh-delete-project" href="javascript:void(0);"
                     data-url="{$proj->getDetailUrl()}" data-ch="{$channelId}"
                     data-pg="{$programId}">Delete</a>
         </div>

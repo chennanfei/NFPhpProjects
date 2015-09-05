@@ -41,6 +41,11 @@ TM.configure({
             module: 'first'
         },
         
+        projectImageList: {
+            controller: 'controller.ProjectImageListController',
+            module: 'first'
+        },
+        
         signIn: {
             controller: 'controller.SignInController',
             module: 'first'
@@ -213,23 +218,60 @@ TM.declare('controller.ProjectController').inherit('thinkmvc.Controller').extend
 
 TM.declare('controller.ProjectListController').inherit('thinkmvc.Controller').extend({
     events: {
-        'click a.lh-action-delete': 'deleteProject'
+        'click a.lh-delete-project': 'deleteProject'
     },
     
-    rootNode: '#projList',
+    rootNode: '#projectList',
     
     deleteProject: function(event) {
         if (!confirm('Do you really want to delete this project?')) {
             return;
         }
-        var data = $(event.currentTarget).data();
-        var urlParams = ['a=delete'];
-        for (var k in data) {
-            if (k != 'url') {
-                urlParams.push(k + '=' + data[k]);
+        
+        var $target = $(event.currentTarget), data = $target.data();
+        data['a'] = 'delete';
+        $.ajax(data['url'], {
+            method: 'post',
+            dataType: 'json',
+            data: data,
+
+            error: function(data) {
+                alert(data.message);
+            },
+            
+            success: function(data) {
+                $target.parents('div.lh-list-item').remove();
             }
+        });
+    }
+});
+
+TM.declare('controller.ProjectImageListController').inherit('thinkmvc.Controller').extend({
+    events: {
+        'click a.lh-delete-image': 'deleteImage'
+    },
+    
+    rootNode: '#projectImageList',
+    
+    deleteImage: function(event) {
+        if (!confirm('Do you really want to delete this image?')) {
+            return;
         }
-        window.location.href = data['url'] + '&' + urlParams.join('&');
+        var $target = $(event.currentTarget), data = $target.data();
+        data['a'] = 'delete';
+        $.ajax(data['url'], {
+            method: 'post',
+            dataType: 'json',
+            data: data,
+
+            error: function(data) {
+                alert(data.message);
+            },
+            
+            success: function(data) {
+                $target.parents('div.lh-list-item').remove();
+            }
+        });
     }
 });
 

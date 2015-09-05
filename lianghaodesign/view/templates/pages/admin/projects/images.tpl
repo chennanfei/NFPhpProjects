@@ -5,7 +5,7 @@
 {/block}
 
 {block name="center"}
-<div class="lh-box">
+<div class="lh-box" id="projectImageList">
     <div class="lh-box-inner">
         {include file="widgets/alert.tpl"}
         {include file="features/admin/projects/project-info.tpl"}

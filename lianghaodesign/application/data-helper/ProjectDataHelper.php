@@ -138,16 +138,10 @@ class ProjectDataHelper extends BaseDataHelper {
         $programId = $this->request->getParameter('pg');
         try {
             (new ProjectService)->removeProject($projectId);
-            $url = $this->urlHelper->getProjectsUrl($channelId, $programId);
-            $result = array('nextUrl' => $url);
+            return array('message' => "Successfully delete the project $projectId");
         } catch (Exception $e) {
-            $message = $e->getMessage();
-            $messageType = 'error';
-            $result = $this->getProjectListPageData();
-            $result['message'] = $e->getMessage();
-            $result['messageType'] = 'error';
+            return array('message' => $e->getMessage());
         }
-        return $result;
     }
     
     protected function getProjectImagesPageData() {
@@ -169,7 +163,7 @@ class ProjectDataHelper extends BaseDataHelper {
     private function initializeImagesPage($projectId, $isPreviewed) {
         $result = array();
         $result['projectImagesUrl'] = $this->urlHelper->getProjectImagesUrl($projectId);
-        $result['page'] = 'project';
+        $result['page'] = 'projectImageList';
         $result['pageContentTitle'] = $isPreviewed ? 'Previewed images' : 'Project images';
         $result['title'] = 'Project images';
         
@@ -189,24 +183,36 @@ class ProjectDataHelper extends BaseDataHelper {
     }
     
     protected function getAddProjectImagePageData() {
+        $projectId = $this->request->getParameter('projectId');
+        $isPreviewed = $this->request->getParameter('isPreviewed') == 1 ? 1 : 0;
+        $result = $this->initializeImagesPage($projectId, $isPreviewed);
+        if ($this->request->isPost()) {
+            $result = array_merge($result, $this->addImage());
+        }
+        
+        return $result;
+    }
+    
+    private function addImage() {
         $data = $this->request->getParameters();
         $data['creator'] = $this->session->getUserID();
         try {
             $image = (new ProjectService)->saveImage($data);
-            $result = array('image' => $image, 'nextUrl' => null);
-            if ($image->isValid()) {
-                $result['nextUrl'] = $this->urlHelper->getProjectImagesUrl($projectId);
-                if ($data['isPreviewed']) {
-                    $result['nextUrl'] = $result['nextUrl'] . '&preview=1';
-                }
-            } else {
-                $result['errors'] = $image->getErrors();
-                $result['messageType'] = 'error';
-            }
         } catch (Exception $e) {
-            $result = array('messageType' => 'error', 'message' => $e->getMessage());
+            return array('messageType' => 'error', 'message' => $e->getMessage());
         }
         
+        $result = array();
+        if ($image->isValid()) {
+            $result['nextUrl'] = $this->urlHelper->getProjectImagesUrl($data['projectId']);
+            if ($data['isPreviewed']) {
+                $result['nextUrl'] = $result['nextUrl'] . '&preview=1';
+            }
+        } else {
+            $result['errors'] = $image->getErrors();
+            $result['messageType'] = 'error';
+        }
+        $result['image'] = $image;
         return $result;
     }
     
@@ -217,19 +223,37 @@ class ProjectDataHelper extends BaseDataHelper {
         $projectId = $image->getProjectId();
         $result = $this->initializeImagesPage($projectId, $image->getIsPreviewed());
         $result['action'] = 'update';
-        if ($this->request->isPost()) {
-            $data = $this->request->getParameters();
+        $result['image'] = $image;
+        if (!$this->request->isPost()) {
+            return $result;
+        }
+
+        $data = $this->request->getParameters();
+        try {
             $result['image'] = $service->saveImage($data);
-            $result['message'] = 'Successfully saved the image';
-        } else {
-            $result['image'] = $image;
+            if ($result['image']->isValid()) {
+                $result['message'] = 'Successfully saved the image';
+                $result['messageType'] = 'info';
+            } else {
+                $result['messageType'] = 'error';
+                $result['errors'] = $image->getErrors();
+            }
+        } catch (Exception $e) {
+            $result['messageType'] = 'error';
+            $result['message'] = $e->getMessage();
         }
         
         return $result;
     }
     
-    private function deleteImage() {
-        
+    protected function getDeleteProjectImagePageData() {
+        $imageId = $this->request->getParameter('id');
+        try {
+            (new ProjectService)->deleteImage($imageId);
+            return array('message' => "Successfully deleted the image $imageId");
+        } catch (Exception $e) {
+            return array('message' => $e->getMessage());
+        }
     }
     
     private function addProject() {

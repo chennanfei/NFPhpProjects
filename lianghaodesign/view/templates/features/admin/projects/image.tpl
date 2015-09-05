@@ -47,10 +47,10 @@
     </form>
     
     <div class="lh-col4 lh-col-last">
-        {if $image->getId()}
         <div class="lh-project-image">
+            {if $image->getId()}
             <img src="{$image->getImageUrl()}">
+            {/if}
         </div>
-        {/if}
     </div>
 </div>

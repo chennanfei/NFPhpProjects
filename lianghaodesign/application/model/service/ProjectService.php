@@ -95,7 +95,7 @@ class ProjectService extends BaseService {
     
     public function getImage($imageId) {
         $sql = 'select i from ProjectImage i where i.id=:id';
-        $images = $this->dbService->query($sql, array(id => $imageId));
+        $images = $this->dbService->query($sql, array('id' => $imageId));
         return !empty($images) ? $images[0] : null;
     }
     
@@ -119,6 +119,13 @@ class ProjectService extends BaseService {
         return $image;
     }
     
+    public function deleteImage($imageId) {
+        $image = $this->getImage($imageId);
+        if (!$image) {
+            throw new Exception("Project image $imageId was not found");
+        }
+        $this->dbService->remove($image);
+    }
 }
 
 ?>

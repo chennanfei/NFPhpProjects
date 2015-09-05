@@ -50,12 +50,7 @@ class ProjectController extends BaseController {
     
     private function deleteProject() {
         $data = $this->getData('deleteProjectPageData');
-        if (isset($data['nextUrl'])) {
-            $this->request->redirect($data['nextUrl']);
-        } else {
-            $this->setPageData($data);
-            $this->displayPage('list');
-        }
+        print json_encode($data);
     }
     
     public function projectsAction() {
@@ -74,7 +69,8 @@ class ProjectController extends BaseController {
                 break;
             case 'delete':
                 $data = $this->getData('deleteProjectImagePageData');
-                break;
+                print json_encode($data);
+                return;
             default:
                 $data = $this->getData('projectImagesPageData');
         }

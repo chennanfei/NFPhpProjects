@@ -17,7 +17,9 @@
         <div class="lh-col2">{$image->getCreatedTime()}</div>
         <div class="lh-col2 lh-col-last lh-actions">
             <a class="lh-action-edit" href="{$image->getDetailUrl()}&a=update">Edit</a>
-            <a class="lh-action-delete" href="{$image->getDetailUrl()}&a=delete">Delete</a>
+            <a class="lh-action-delete lh-delete-image" href="javascript:void(0);"
+                data-url="{$image->getDetailUrl()}"
+                data-pid="{$image->getProjectId()}">Delete</a>
         </div>
     </div>
         {/foreach}

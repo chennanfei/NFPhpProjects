@@ -15,5 +15,11 @@ class SiteImage extends BaseEntity {
         $this->imageName = $name;
     }
 
+    protected function validateImageName() {
+        print_r('image name: ' . $this->imageName);
+        if (strlen($this->imageName) < 5) {
+            throw new Exception('imageName is invalid');
+        }
+    }
 }
 ?>
