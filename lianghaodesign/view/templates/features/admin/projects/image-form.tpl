@@ -1,4 +1,4 @@
-<form id="projectImageForm" class="lh-form" action="{$projectImagesUrl}" method="post">
+<form id="projectImageForm" class="lh-form" action="{$projectImagesUrl}&preview={$image->getIsPreviewed()}" method="post">
     {include file="features/admin/entry-times.tpl" entry=$image}
 
     <input type="hidden" name="a" value="{$action}"/>

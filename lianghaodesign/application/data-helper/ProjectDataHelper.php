@@ -226,8 +226,7 @@ class ProjectDataHelper extends BaseDataHelper {
     protected function getUpdateProjectImagePageData() {
         $imageId = $this->request->getParameter('id');
         $isPreviewed = $this->request->getParameter('isPreviewed');
-        $projectId = $this->request->getParameter('pid');
-        $isPreviewed = $this->request->getParameter('ip');
+        $projectId = $this->request->getParameter('projectId');
         
         $service = new ProjectService;
         $image = $service->getImage($imageId);
@@ -235,7 +234,7 @@ class ProjectDataHelper extends BaseDataHelper {
             //return array('nextUrl' => $this->getImageNextUrl($projectId, $isPreviewed));
         }
         $projectId = $image->getProjectId();
-        $result = $this->initializeImagesPage($projectId, $image->getIsPreviewed());
+        $result = $this->initializeImagesPage($projectId, $isPreviewed);
         $result['action'] = 'update';
         $result['image'] = $image;
         if (!$this->request->isPost()) {
@@ -246,6 +245,7 @@ class ProjectDataHelper extends BaseDataHelper {
         try {
             $result['image'] = $service->saveImage($data);
             if ($result['image']->isValid()) {
+                $result['images'] = $service->getImages($projectId, $isPreviewed);
                 $result['message'] = 'Successfully saved the image';
                 $result['messageType'] = 'info';
             } else {
