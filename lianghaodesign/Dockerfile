@@ -16,4 +16,6 @@ CMD ["/run.sh"]
 WORKDIR /app
 RUN mkdir /uploaded_images && chmod 777 /uploaded_images
 RUN ln -s /uploaded_images
+VOLUME /uploaded_images
+
 COPY . /app
