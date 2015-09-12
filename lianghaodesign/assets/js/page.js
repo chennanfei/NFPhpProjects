@@ -320,9 +320,37 @@ TM.declare('controller.ImageUploadController').inherit('thinkmvc.Controller').ex
 });
 
 TM.declare('controller.GatewayImageListController').inherit('thinkmvc.Controller').extend({
+    events: {
+        'click a.lh-delete-image': 'deleteImage',
+    },
+
+    rootNode: '#gwImages',
     
+    deleteImage: function(event) {
+        if (!confirm('Do you really want to delete this image?')) {
+            return;
+        }
+        var $target = $(event.currentTarget), data = $target.data();
+        data['a'] = 'delete';
+        $.ajax(data['url'], {
+            method: 'post',
+            dataType: 'json',
+            data: data,
+
+            error: function(data) {
+                alert(data.message);
+            },
+            
+            success: function(data) {
+                $target.parents('div.lh-list-item').remove();
+            }
+        });
+    }
 });
 
 TM.declare('controller.GatewayImageAddController').inherit('thinkmvc.Controller').extend({
-    
+    initialize: function() {
+        this.invoke('thinkmvc.Controller:initialize');
+        this.U.createInstance('controller.ImageUploadController');
+    },
 });

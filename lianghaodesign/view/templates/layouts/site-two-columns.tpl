@@ -10,8 +10,9 @@
 </head>
 <body class="background-primary" data-page="{$page}">
     <header class="tm-container tm-row header-fixed">
-        {include file="features/shared/site-header.tpl"}
+        {include file="features/site/header.tpl"}
     </header>
+    
     <div id="pageLoading" class="page-loading background-stress">
         Loading......
     </div>
@@ -21,8 +22,11 @@
             {block name="center"}{/block}
         </div>
     </div>
-    <div class="footer">
-        {block name="bottom"}{/block}
-    </div>
+    
+    <!--
+    <footer class="tm-container footer-fixed" id="footer">
+        {include file="features/site/footer.tpl"}
+    </footer>
+    -->
 </body>
 </html>

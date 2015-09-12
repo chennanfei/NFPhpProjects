@@ -20,6 +20,7 @@ class GatewayImageDataHelper extends BaseDataHelper {
             'imagesUrl' => $this->urlHelper->getGatewayImagesUrl(),
             'homeUrl' => $this->urlHelper->getHomeUrl(),
             'signOutUrl' => $this->urlHelper->getSignOutUrl(),
+            'uploadImageUrl' => $this->urlHelper->getUploadImageUrl()
         );
     }
     

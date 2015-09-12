@@ -55,8 +55,7 @@ class GatewayImageController extends BaseController {
     
     private function deleteImage() {
         $data = $this->getData('deleteImagePageData');
-        $this->setPageData($data);
-        $this->displayPage('list');
+        print json_encode($data);
     }
 }
 ?>

@@ -37,7 +37,7 @@ class IndexDataHelper extends BaseDataHelper {
             'page' => $channelId,
             'programs' => $programs,
             'title' => $channel->getEnglishName(),
-            'cnTitle' => $channel->getChineseName()
+            'cnTitle' => $channel->getChineseName(),
         );
         return $result;
     }
@@ -51,6 +51,12 @@ class IndexDataHelper extends BaseDataHelper {
             'lifeUrl' => $this->urlHelper->getLifeUrl(),
             'workUrl' => $this->urlHelper->getWorkUrl(),
         );
+    }
+    
+    protected function getProgramProjectsPageData() {
+        $programId = $this->request->getParameter('pid');
+        $program = (new ProgramService)->getProgram($programId);
+        return array('program' => $program);
     }
 }
 ?>

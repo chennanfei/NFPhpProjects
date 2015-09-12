@@ -23,5 +23,10 @@ class IndexController extends BaseController {
         $this->setPageDataFromHelper('lifePageData');
         $this->displayPage('life');
     }
+    
+    public function projectsAction() {
+        $this->setPageDataFromHelper('programProjectsPageData');
+        $this->displayPage('program-projects');
+    }
 }
 ?>

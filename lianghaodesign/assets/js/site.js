@@ -163,18 +163,11 @@ TM.declare('lh.controller.ItemMenuController').inherit('lh.controller.BaseContro
     }
 
     $imagePlaceholders.each(function(index, imageHolder) {
-      var $imageHolder = $(imageHolder), $imageContainer = $imageHolder.parent(),
-        numbers = $imageHolder.data('numbers'),
-        path = $imageHolder.data('path'),
-        i, len = numbers && numbers.length;
-      if (!len) {
-        return;
-      }
-
-      for (i = 0; i < len; i++) {
-        var $img = $('<img>').attr('src', path + numbers[i] + '.jpg');
+      var $imageHolder = $(imageHolder), $imageContainer = $imageHolder.parent(), i, imageUrls = [];
+      $imageHolder.each(function(index, el) {
+        var $img = $('<img>').attr('src', $(el).data('imageUrl'));
         $imageContainer.append($img);
-      }
+      });
     });
 
     $imagePlaceholders.remove();
@@ -197,16 +190,19 @@ TM.declare('lh.controller.ItemMenuController').inherit('lh.controller.BaseContro
       },
       completeHandler: function() {
         hasPendingAjax = false
+        $loading.fadeOut();
       },
       successHandler: function(data, status, xhr) {
         // remove url, no need request twice
         $section.html(data).data('url', null);
+        var $subList = $section.find('.tm-sub-list');
+        $('#menuItem-' + $subList.data('programId')).children('.tm-sub-list').html($subList.html());
+        $subList.parent().remove();
 
         if (autoScroll) {
           // scroll the block to top
           scrollContentToTop.call(self, $section);
         }
-        $loading.fadeOut();
       }
     });
   }
@@ -280,6 +276,7 @@ TM.declare('lh.controller.ItemMenuController').inherit('lh.controller.BaseContro
             $section = $el;
             return false;
           }
+          return true;
         });
       }
 
@@ -303,7 +300,7 @@ TM.declare('lh.controller.ItemMenuController').inherit('lh.controller.BaseContro
       // if the sub menu is open, then close it
       if ($subItem.is(':visible')) {
         $target.siblings('.tm-sub-list').slideUp(this.animateTime.NORMAL);
-        return;
+        return false;
       }
 
       // expand sub menu

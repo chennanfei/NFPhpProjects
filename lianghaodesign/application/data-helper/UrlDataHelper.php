@@ -34,7 +34,7 @@ class UrlDataHelper {
         }
     }
     
-    public function getProjectsUrl($channelId, $programId=null) {
+    public function getProjectsUrl($channelId=null, $programId=null) {
         $params = null;
         if ($channelId && $programId) {
             $params = "ch=$channelId&pg=$programId";

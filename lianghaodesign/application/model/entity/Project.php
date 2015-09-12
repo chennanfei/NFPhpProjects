@@ -57,6 +57,10 @@ class Project extends BaseEntity {
     
     protected $contentId;
     
+    private $previewedImages;
+    
+    private $images;
+    
     public function initialize(array $data) {
         if (!array_key_exists($data, 'status')) {
             $data['status'] = Project::STATUS_NEW;
@@ -119,7 +123,7 @@ class Project extends BaseEntity {
     }
     
     public function getContentId() {
-        return '';
+        return 'project-' . $this->id;
     }
     
     public function getDetailUrl() {
@@ -172,6 +176,30 @@ class Project extends BaseEntity {
     
     public function setShowDescription($showDescription) {
         $this->showDescription = $showDescription;
+    }
+    
+    public function setPreviewedImages($images) {
+        $this->previewedImages = $images;
+    }
+    
+    public function getPreviewedImages() {
+        return $this->previewedImages;
+    }
+    
+    public function setImages($images) {
+        $this->images = $images;
+    }
+    
+    public function getImages($images) {
+        return $this->images;
+    }
+    
+    public function getPosition() {
+        if ($this->previewedImages && count($this->previewedImages)) {
+            return $this->previewedImages[0]->getDisplayPosition();
+        }
+        
+        return 'left';
     }
 }
 ?>

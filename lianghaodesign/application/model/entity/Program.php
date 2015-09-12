@@ -1,4 +1,6 @@
 <?php
+require_once 'Scorpion/Utility/NFUtil.php';
+
 /**
 @Entity
 @Table(name="programs")
@@ -20,6 +22,8 @@ class Program {
     private $siteChannelId;
     
     private $projects = array();
+    private $leftProjects = array();
+    private $rightProjects = array();
     
     public function getChineseName() {
         return $this->chineseName;
@@ -45,18 +49,41 @@ class Program {
         return $this->projects;
     }
     
+    public function getLeftProjects() {
+        return $this->leftProjects;
+    }
+    
+    public function getRightProjects() {
+        return $this->rightProjects;
+    }
+    
     public function addProject($project) {
         array_push($this->projects, $project);
     }
     
-    public function addProjects($projects) {
-        if (!(isset($projects) and count($projects) < 1)) {
+    public function setProjects($projects) {
+        if (!($projects && count($projects))) {
             return;
         }
         
-        foreach ($p as $projects) {
-            $this->addProject($p);
+        $this->projects = $projects;
+        $this->separateProjects($projects);
+    }
+    
+    private function separateProjects($projects) {
+        $size = count($this->projects);
+        for ($i = 0; $i < $size; $i++) {
+            if ($i % 2 == 0) {
+                array_push($this->leftProjects, $this->projects[$i]);
+            } else {
+                array_push($this->rightProjects, $this->projects[$i]);
+            }
         }
     }
+    
+    public function getProjectsUrl() {
+        return NFUtil::getUrl('/index/projects?pid=' . $this->getId());
+    }
+    
 }
 ?>

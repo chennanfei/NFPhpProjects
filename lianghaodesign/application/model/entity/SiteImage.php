@@ -32,7 +32,7 @@ class SiteImage extends BaseEntity {
     }
     
     public function getImageUrl() {
-        return NFUtil::getBaseUrl() . '/' . self::IMAGES_DIR . '/' . $this->getImageName();
+        return NFUtil::getBaseUrl() . self::IMAGES_DIR . '/' . $this->getImageName();
     }
     
     public function getImageNamePrefix() {
