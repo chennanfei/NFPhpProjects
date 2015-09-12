@@ -9,13 +9,17 @@ ENV SMARTY_COMPILE_CACHE_DIR /templates_c/cache_c
 RUN mkdir /templates_c && chmod 777 /templates_c
 RUN mkdir /templates_c/cache_c && chmod 777 /templates_c/cache_c
 
+WORKDIR /app
+
+RUN mkdir /uploaded_images && chmod 777 /uploaded_images
+VOLUME /uploaded_images
+
+RUN echo '*/5 * * * * cp -r /app/uploaded_images/* /uploaded_images' >> /var/spool/cron/crontabs/root
+
+RUN mkdir /app/uploaded_images && chmod 777 /app/uploaded_images
+
 COPY run.sh /
 RUN chmod +x /run.sh
 CMD ["/run.sh"]
-
-WORKDIR /app
-RUN mkdir /uploaded_images && chmod 777 /uploaded_images
-RUN ln -s /uploaded_images
-VOLUME /uploaded_images
 
 COPY . /app

@@ -23,10 +23,8 @@
         </div>
     </div>
     
-    <!--
     <footer class="tm-container footer-fixed" id="footer">
         {include file="features/site/footer.tpl"}
     </footer>
-    -->
 </body>
 </html>

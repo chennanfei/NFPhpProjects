@@ -24,13 +24,17 @@ class ImageUploadController extends BaseController {
         }
         
         $imageName = $this->request->getParameter('imageNamePrefix') . $path['basename'];
-        $imagePath = self::IMAGES_DIR . "/$imageName";
+        $imagePath = $this->getImagePath($imageName);
         if (move_uploaded_file($tmp, $imagePath)) {
             $imageUrl = $this->getUploadedImageUrl($imageName);
             echo "<img src='$imageUrl' data-image-name='$imageName'>";
         } else {
             echo 'Failed to upload image. Please try again.';
         }
+    }
+    
+    private function getImagePath($imageName) {
+        return SITE_ROOT_PATH . self::IMAGES_DIR . "/$imageName";
     }
     
     private function getUploadedImageUrl($imageName) {

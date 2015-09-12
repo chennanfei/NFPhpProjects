@@ -10,10 +10,6 @@ class SiteImage extends BaseEntity {
         return $this->imageName;
     }
     
-    public function getImagePath() {
-        return NFUtil::getImageUrl($this->imageName);
-    }
-
     public function setImageName($name) {
         $this->imageName = $name;
     }

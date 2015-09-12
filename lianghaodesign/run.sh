@@ -12,5 +12,8 @@ source /etc/apache2/envvars
 
 sass assets/css/aggregator.scss assets/css/page.css
 
+# start cron daemon
+cron start
+
 tail -F /var/log/apache2/* &
 exec apache2 -D FOREGROUND
