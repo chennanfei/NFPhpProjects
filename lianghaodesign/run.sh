@@ -15,5 +15,8 @@ sass assets/css/aggregator.scss assets/css/page.css
 # start cron daemon
 cron start
 
+# copy the backup images to app
+cp /uploaded_images/* /app/uploaded_images
+
 tail -F /var/log/apache2/* &
 exec apache2 -D FOREGROUND
