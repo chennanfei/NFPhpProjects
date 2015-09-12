@@ -23,8 +23,8 @@ TM.configure({
             module: 'first'
         },
         
-        gwImageAdd: {
-            controller: 'controller.GatewayImageAddController',
+        gwImage: {
+            controller: 'controller.GatewayImageController',
             module: 'first'
         },
         
@@ -348,7 +348,7 @@ TM.declare('controller.GatewayImageListController').inherit('thinkmvc.Controller
     }
 });
 
-TM.declare('controller.GatewayImageAddController').inherit('thinkmvc.Controller').extend({
+TM.declare('controller.GatewayImageController').inherit('thinkmvc.Controller').extend({
     initialize: function() {
         this.invoke('thinkmvc.Controller:initialize');
         this.U.createInstance('controller.ImageUploadController');

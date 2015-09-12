@@ -39,7 +39,7 @@ class GatewayImageDataHelper extends BaseDataHelper {
         }
         $result['action'] = 'add';
         $result['channels'] = (new SiteChannelService)->getChannels();
-        $result['page'] = 'gwImageAdd';
+        $result['page'] = 'gwImage';
         $result['pageContentTitle'] = 'Add new gateway image';
         $result['title'] = 'Add gateway image';
         return $result;
@@ -84,7 +84,7 @@ class GatewayImageDataHelper extends BaseDataHelper {
         }
         $result['action'] = 'update';
         $result['channels'] = (new SiteChannelService)->getChannels();
-        $result['page'] = 'gwImageUpdate';
+        $result['page'] = 'gwImage';
         $result['pageContentTitle'] = 'Update gateway image';
         $result['title'] = 'Update gateway image';
         return $result;
