@@ -190,6 +190,8 @@ TM.declare('lh.controller.ItemMenuController').inherit('lh.controller.BaseContro
       },
       completeHandler: function() {
         hasPendingAjax = false
+      },
+      errorHandler: function() {
         $loading.fadeOut();
       },
       successHandler: function(data, status, xhr) {
@@ -203,6 +205,8 @@ TM.declare('lh.controller.ItemMenuController').inherit('lh.controller.BaseContro
           // scroll the block to top
           scrollContentToTop.call(self, $section);
         }
+        
+        $loading.fadeOut();
       }
     });
   }

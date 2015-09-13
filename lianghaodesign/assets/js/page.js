@@ -205,7 +205,6 @@ TM.declare('controller.ProjectController').inherit('thinkmvc.Controller').extend
             var $grp = $groups.eq(i);
             if ($grp.attr('id') == groupId) {
                 $grp.removeClass('lh-hidden');
-                $sel.val($grp.find('option:first').val());
                 isFound = true;
             } else {
                 $grp.addClass('lh-hidden');

@@ -35,7 +35,9 @@
                 {foreach from=$channels item=channel}
                 <optgroup class="lh-hidden" id="programs.{$channel->getId()}" label="{$channel->getEnglishName()}">
                 {foreach from=$channel->getPrograms() item=program}
-                    <option value="{$program->getId()}">{$program->getChineseName()} - {$program->getEnglishName()}</option>
+                    <option value="{$program->getId()}" {if $project->getProgramId() == $program->getId()}selected{/if}>
+                        {$program->getChineseName()} - {$program->getEnglishName()}
+                    </option>
                 {/foreach}
                 </optgroup>
                 {/foreach}

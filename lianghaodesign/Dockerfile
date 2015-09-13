@@ -16,8 +16,6 @@ VOLUME /uploaded_images
 
 RUN echo '*/5 * * * * cp -r /app/uploaded_images/* /uploaded_images' >> /var/spool/cron/crontabs/root
 
-RUN mkdir /app/uploaded_images && chmod 777 /app/uploaded_images
-
 COPY run.sh /
 RUN chmod +x /run.sh
 CMD ["/run.sh"]
