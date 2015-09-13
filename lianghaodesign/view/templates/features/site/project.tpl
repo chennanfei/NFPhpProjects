@@ -2,7 +2,7 @@
     <div class="close-btn"></div>
     <div class="tm-row images">
         {foreach from=$project->getImages() item=image name=img}
-        <div {if $image->getIsHalf()}class="tm-col6"{else}class="tm-col12"{/if}>
+        <div {if $image->getIsHalf()}class="tm-row-col6"{else}class="tm-row-col12"{/if}>
             {if $smarty.foreach.img.index == 0}
             <img src="{$image->getImageUrl()}">
             {else}
@@ -13,7 +13,7 @@
     </div>
     
     <div class="tm-row">
-        <div class="tm-col6">
+        <div class="tm-row-col6">
             <div class="desc">
                 <p>{$project->getChineseTitle()} / {$project->getEnglishTitle()}</p>
                 <p>
