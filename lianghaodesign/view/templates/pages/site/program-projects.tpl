@@ -13,7 +13,11 @@
 </div>
 
 {foreach from=$program->getProjects() item=project}
-{include file="features/site/project.tpl" project=$project}
+    {if $program->getId() == 'lifeTeam'}
+        {include file="features/site/team.tpl" project=$project}
+    {else}
+        {include file="features/site/project.tpl" project=$project}
+    {/if}
 {/foreach}
 
 <div class="tm-hidden">

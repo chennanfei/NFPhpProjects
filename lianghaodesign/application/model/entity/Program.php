@@ -50,10 +50,16 @@ class Program {
     }
     
     public function getLeftProjects() {
+        if (count($this->leftProjects) < 1) {
+            $this->separateProjects($this->projects);
+        }
         return $this->leftProjects;
     }
     
     public function getRightProjects() {
+        if (count($this->rightProjects) < 1) {
+            $this->separateProjects($this->projects);
+        }
         return $this->rightProjects;
     }
     

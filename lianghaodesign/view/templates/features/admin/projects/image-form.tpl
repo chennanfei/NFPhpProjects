@@ -14,6 +14,11 @@
         input_value="{$image->getDisplayOrder()}"
         placeholder="Please enter numbers"}
 
+    {include file="widgets/text-input-row.tpl" right_col="4"
+        input_label="Alias name" input_name="aliasName"
+        input_value="{$image->getAliasName()}"
+        placeholder="Provide alias name for team members"}
+
     <div class="lh-row lh-input">
         <div class="lh-col3 lh-input-label">Display position:</div>
         <div class="lh-col9 lh-col-last">

@@ -12,6 +12,9 @@ class ProjectImage extends SiteImage {
     /** @Column(type="string", name="image_name") */
     protected $imageName;
     
+    /** @Column(type="string", name="alias_name") */
+    protected $aliasName;
+    
     /** @Column(type="string", name="project_id") */
     protected $projectId;
 
@@ -72,6 +75,14 @@ class ProjectImage extends SiteImage {
         $id = $this->id;
         $projectId = $this->projectId;
         return NFUtil::getUrl("/project/images?id=$id");
+    }
+    
+    public function getAliasName() {
+        return $this->aliasName;
+    }
+    
+    public function setAliasName($name) {
+        $this->aliasName = $name;
     }
 }
 ?>

@@ -26,10 +26,18 @@ class ProgramService extends BaseService {
     
     private function fillProgramProjects($program) {
         $projects = (new ProjectService)->getProjects($program->getId());
-        if ($projects && count($projects)) {
-            foreach ($projects as $project) {
-                $this->setProjectImages($project);
-            }
+        if (!($projects && count($projects))) {
+            return;
+        }
+        
+        if ($program->getId() == 'lifeTeam') {
+            $this->setProjectImages($projects[0]);
+            $program->addProject($projects[0]);
+            return;
+        }
+        
+        foreach ($projects as $project) {
+            $this->setProjectImages($project);
         }
         
         $program->setProjects($projects);

@@ -35,7 +35,7 @@ class AdminDataHelper extends BaseDataHelper {
                 $messageType = 'error';
             }
         }
-        
+
         return array(
             'message'          => $message,
             'messageType'      => $messageType,
@@ -67,6 +67,7 @@ class AdminDataHelper extends BaseDataHelper {
             'signOutUrl' => $this->urlHelper->getSignOutUrl(),
             'imagesUrl' => $this->urlHelper->getGatewayImagesUrl(),
             'projectsUrl' => $this->urlHelper->getProjectsUrl(),
+            'teamUrl' => $this->urlHelper->getTeamUrl()
         );
     }
     

@@ -25,6 +25,14 @@ class UrlDataHelper {
     public function getProjectUrl() {
         return NFUtil::getUrl('project/project');
     }
+
+    public function getTeamUrl() {
+        return NFUtil::getUrl('team');
+    }
+    
+    public function getTeamMemberUrl() {
+        return NFUtil::getUrl('team/member');
+    }
     
     public function getProjectImagesUrl($projectId) {
         if (isset($projectId)) {

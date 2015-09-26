@@ -92,3 +92,16 @@
         opacity: 0.3;
     }
 }
+
+.lh-members {
+    .lh-member {
+        width: 33%;
+        text-align: center;
+        padding: 15px;
+        float: left;
+        
+        img {
+            max-width: 100%;
+        }
+    }
+}

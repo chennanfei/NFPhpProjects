@@ -51,6 +51,16 @@ TM.configure({
         signIn: {
             controller: 'controller.SignInController',
             module: 'first'
+        },
+        
+        team: {
+            controller: 'controller.TeamController',
+            module: 'first'
+        },
+        
+        teamMember: {
+            controller: 'controller.TeamMemberController',
+            module: 'first'
         }
     }
 });
@@ -348,6 +358,16 @@ TM.declare('controller.GatewayImageListController').inherit('thinkmvc.Controller
 });
 
 TM.declare('controller.GatewayImageController').inherit('thinkmvc.Controller').extend({
+    initialize: function() {
+        this.invoke('thinkmvc.Controller:initialize');
+        this.U.createInstance('controller.ImageUploadController');
+    },
+});
+
+TM.declare('controller.TeamController').inherit('thinkmvc.Controller').extend({
+});
+
+TM.declare('controller.TeamMemberController').inherit('thinkmvc.Controller').extend({
     initialize: function() {
         this.invoke('thinkmvc.Controller:initialize');
         this.U.createInstance('controller.ImageUploadController');

@@ -2,7 +2,7 @@
     <div class="lh-upload-spinner" id="uploadSpinner">
         Uploading, please wait...
     </div>
-    <div class="lh-spacing-base">Current image: {$image->getImageName()}</div>
+    <div class="lh-spacing-base">{$image->getImageName()}</div>
     <div class="lh-upload-image lh-spacing-base" id="previewedImage">
         {if $image->getId()}
         <img src="{$image->getImageUrl()}">

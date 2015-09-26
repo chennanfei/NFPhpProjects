@@ -66,6 +66,7 @@ create table projects (
 create table project_images (
     id int auto_increment not null,
     image_name varchar(120) not null,
+    alias_name varchar(20) null,
     creator varchar(20) not null,
     created_time datetime not null,
     updated_time datetime not null,
@@ -77,6 +78,20 @@ create table project_images (
     primary key (id),
     constraint project_images_uid foreign key(creator) references users(id)
 ) engine=InnoDB default charset=utf8;
+
+create table team_members (
+    id int auto_increment not null,
+    image_name varchar(120) not null,
+    member_name varchar(120) not null,
+    creator varchar(20) not null,
+    created_time datetime not null,
+    updated_time datetime not null,
+    display_order int not null,
+    primary key (id),
+    constraint ti_uid foreign key(creator) references users(id)
+) engine=InnoDB default charset=utf8;
+
+alter table project_images add alias_name varchar(20) null;
 
 
 insert into users values(
