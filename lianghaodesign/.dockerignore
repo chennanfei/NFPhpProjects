@@ -5,3 +5,4 @@
 .komodotools
 docs
 db
+local_run.sh

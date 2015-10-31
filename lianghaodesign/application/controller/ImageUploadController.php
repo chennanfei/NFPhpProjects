@@ -1,9 +1,9 @@
 <?php
 
 require_once 'controller/BaseController.php';
+require_once 'model/entity/SiteImage.php';
 
 class ImageUploadController extends BaseController {
-    const IMAGES_DIR = '/uploaded_images';
     private $ALLOWED_EXTS = array('jpg', 'png', 'jpeg');
     
     public function indexAction() {
@@ -22,7 +22,7 @@ class ImageUploadController extends BaseController {
             echo 'image size should be smaller than 1M';
             return;
         }
-        
+
         $imageName = $this->request->getParameter('imageNamePrefix') . $path['basename'];
         $imagePath = $this->getImagePath($imageName);
         if (move_uploaded_file($tmp, $imagePath)) {
@@ -34,11 +34,11 @@ class ImageUploadController extends BaseController {
     }
     
     private function getImagePath($imageName) {
-        return SITE_ROOT_PATH . self::IMAGES_DIR . "/$imageName";
+        return SiteImage::IMAGES_DIR . $imageName;
     }
     
     private function getUploadedImageUrl($imageName) {
-        return NFUtil::getBaseUrl() . '/' . self::IMAGES_DIR . "/$imageName";
+        return NFUtil::getBaseUrl() . $this->getImagePath($imageName);
     }
 }
 ?>

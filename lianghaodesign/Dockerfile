@@ -1,6 +1,6 @@
 FROM tutum/apache-php:latest
 
-RUN apt-get update && apt-get install -y ruby2.0
+RUN apt-get update && apt-get install -y ruby2.0 rsync
 RUN gem list && gem install -y sass
 
 ENV SMARTY_COMPILE_DIR /templates_c
@@ -11,10 +11,10 @@ RUN mkdir /templates_c/cache_c && chmod 777 /templates_c/cache_c
 
 WORKDIR /app
 
-RUN mkdir /uploaded_images && chmod 777 /uploaded_images
+RUN mkdir /site-images && chmod 777 /site-images
 VOLUME /uploaded_images
 
-RUN echo '*/5 * * * * cp -r /app/uploaded_images/* /uploaded_images' >> /var/spool/cron/crontabs/root
+RUN echo "* * * * * rsync -avr /site-images/* /uploaded_images" >> /var/spool/cron/crontabs/root
 
 COPY run.sh /
 RUN chmod +x /run.sh

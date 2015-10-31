@@ -3,7 +3,7 @@ require_once 'Scorpion/Utility/NFUtil.php';
 require_once 'model/entity/BaseEntity.php';
 
 class SiteImage extends BaseEntity {
-    const IMAGES_DIR = '/uploaded_images';
+    const IMAGES_DIR = '/site-images/';
     private $ALLOWED_EXTS = array('jpg', 'png', 'jpeg');
     
     public function getImageName() {
@@ -28,7 +28,7 @@ class SiteImage extends BaseEntity {
     }
     
     public function getImageUrl() {
-        return NFUtil::getBaseUrl() . self::IMAGES_DIR . '/' . $this->getImageName();
+        return NFUtil::getBaseUrl() . self::IMAGES_DIR . $this->getImageName();
     }
     
     public function getImageNamePrefix() {

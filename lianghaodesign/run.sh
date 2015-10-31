@@ -12,11 +12,12 @@ source /etc/apache2/envvars
 
 sass assets/css/aggregator.scss assets/css/page.css
 
+cp /uploaded_images/* /site-images
+
+ln -s /site-images /app
+
 # start cron daemon
 cron start
-
-# copy the backup images to app
-cp -r /uploaded_images .
 
 tail -F /var/log/apache2/* &
 exec apache2 -D FOREGROUND
