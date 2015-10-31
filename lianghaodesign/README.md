@@ -1,5 +1,5 @@
 ### start site ###
-'''
+```
 docker run -d --name lh -p 80:80 \
     -v /Users/ucdream/Github/NFPhpProjects/lianghaodesign:/app \
     -v /Users/ucdream/Sites/lianghaodesign/images:/uploaded_images \
@@ -8,12 +8,12 @@ docker run -d --name lh -p 80:80 \
     -e DATABASE_PASSWORD=lianghao \
     -e DATABASE_USER=root \
     index.alauda.cn/lianghaotech/lianghaosite:latest
-'''
+```
 
 ### start database ###
-'''
+```
 docker run -d -p 3306:3306 --name lh_db \
     -e MYSQL_ROOT_PASSWORD=lianghao \
     -v  /Users/ucdream/Sites/lianghaodesign/data:/var/lib/mysql \
     mysql:5.7
-'''
+```
