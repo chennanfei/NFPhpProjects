@@ -32,7 +32,7 @@ class SiteImage extends BaseEntity {
     }
     
     public function getImageNamePrefix() {
-        return get_class($this) . '-';
+        return get_class($this);
     }
 }
 ?>

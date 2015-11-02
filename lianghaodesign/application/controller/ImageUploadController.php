@@ -23,7 +23,8 @@ class ImageUploadController extends BaseController {
             return;
         }
 
-        $imageName = $this->request->getParameter('imageNamePrefix') . $path['basename'];
+        $imageName = $this->getImageName($this->request->getParameter('imageNamePrefix'),
+                                         $path['extension']);
         $imagePath = $this->getImagePath($imageName);
         if (move_uploaded_file($tmp, $imagePath)) {
             $imageUrl = $this->getUploadedImageUrl($imageName);
@@ -31,6 +32,12 @@ class ImageUploadController extends BaseController {
         } else {
             echo 'Failed to upload image. Please try again.';
         }
+    }
+
+    private function getImageName($prefix, $ext) {
+        date_default_timezone_set(PRC);
+        $nowtime = strtotime(date("Y-m-d G:i:s"));
+        return "$prefix-$nowtime.$ext";
     }
     
     private function getImagePath($imageName) {
