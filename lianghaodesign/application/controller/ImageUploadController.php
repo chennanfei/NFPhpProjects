@@ -35,7 +35,7 @@ class ImageUploadController extends BaseController {
     }
 
     private function getImageName($prefix, $ext) {
-        date_default_timezone_set(PRC);
+        date_default_timezone_set('PRC');
         $nowtime = strtotime(date("Y-m-d G:i:s"));
         return "$prefix-$nowtime.$ext";
     }
