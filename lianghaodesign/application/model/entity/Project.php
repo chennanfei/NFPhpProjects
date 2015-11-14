@@ -190,7 +190,7 @@ class Project extends BaseEntity {
         $this->images = $images;
     }
     
-    public function getImages($images) {
+    public function getImages() {
         return $this->images;
     }
     
