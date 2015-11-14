@@ -15,7 +15,7 @@ RUN mkdir /site-images && chmod 777 /site-images
 VOLUME /uploaded_images
 
 RUN echo "* * * * * rsync -avr /site-images/* /uploaded_images" >> /var/spool/cron/crontabs/root
-RUN echo "* * * * * echo hello /var/log/test.log" >> /var/spool/cron/crontabs/root
+RUN echo "* * * * * echo hello > /var/log/test.log" >> /var/spool/cron/crontabs/root
 
 COPY run.sh /
 RUN chmod +x /run.sh
