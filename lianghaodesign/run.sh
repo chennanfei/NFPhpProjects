@@ -16,8 +16,5 @@ cp /uploaded_images/* /site-images
 
 ln -s /site-images /app
 
-# start cron daemon
-cron start
-
 tail -F /var/log/apache2/* &
 exec apache2 -D FOREGROUND

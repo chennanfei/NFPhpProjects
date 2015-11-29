@@ -3,6 +3,7 @@
 .gitignore
 .DS_Store
 .komodotools
+.sass-cache
 docs
 db
 local_run.sh
