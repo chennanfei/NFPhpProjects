@@ -21,6 +21,11 @@ class AdminController extends BaseController {
         $this->setPageDataFromHelper('gatewayPageData');
         $this->displayPage('gateway');
     }
+    
+    public function profileAction() {
+        $this->setPageDataFromHelper('profilePageData');
+        $this->displayPage('profile');
+    }
 
     public function signinAction() {
         $data = $this->getData('signInPageData');

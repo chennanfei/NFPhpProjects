@@ -2,6 +2,7 @@
 require_once 'Scorpion/Utility/NFUtil.php';
 require_once 'data-helper/BaseDataHelper.php';
 require_once 'model/service/UserService.php';
+require_once 'model/service/ProfileService.php';
 require_once 'model/service/SiteChannelService.php';
 
 class AdminDataHelper extends BaseDataHelper {
@@ -10,6 +11,7 @@ class AdminDataHelper extends BaseDataHelper {
         $this->scureActions = array(
             'account',
             'home',
+            'profile',
             'projects',
         );
     }
@@ -67,7 +69,7 @@ class AdminDataHelper extends BaseDataHelper {
             'signOutUrl' => $this->urlHelper->getSignOutUrl(),
             'imagesUrl' => $this->urlHelper->getGatewayImagesUrl(),
             'projectsUrl' => $this->urlHelper->getProjectsUrl(),
-            'teamUrl' => $this->urlHelper->getTeamUrl()
+            'profileUrl' => $this->urlHelper->getProfileUrl(),
         );
     }
     
@@ -115,5 +117,43 @@ class AdminDataHelper extends BaseDataHelper {
         return null;
     }
 
+    protected function getProfilePageData() {
+        $message = '';
+        $messageType = '';
+        $profile = null;
+        $req = $this->request;
+        
+        if ($req->isPost() && $req->getParameter('action') == 'update') {
+            try {
+                $profile = (new ProfileService)->saveProfile(
+                    $req->getParameter('address'),
+                    $req->getParameter('cellPhone'),
+                    $req->getParameter('email'),
+                    $req->getParameter('fixedPhone')
+                );
+
+                $message = 'Successfully updated the profile!';
+                $messageType = 'success';
+            } catch (Exception $e) {
+                $message = 'Failed to update the profile. Check your inputs.';
+                $messageType = 'error';
+            }
+        } else {
+            $profile = (new ProfileService)->getProfile();
+        }
+
+        $data = array(
+            'message' => $message,
+            'messageType' => $messageType,
+            'page' => 'profile',
+            'pageContentTitle' => 'Update profile',
+            'title' => 'Update profile'
+        );
+        
+        foreach ($profile as $k => $v) {
+            $data[$k] = $v;
+        }
+        return $data;
+    }
 }
 ?>

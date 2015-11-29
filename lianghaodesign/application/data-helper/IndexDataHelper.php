@@ -3,6 +3,7 @@ require_once 'data-helper/BaseDataHelper.php';
 require_once 'model/service/GatewayImageService.php';
 require_once 'model/service/ProgramService.php';
 require_once 'model/service/SiteChannelService.php';
+require_once 'model/service/ProfileService.php';
 
 class IndexDataHelper extends BaseDataHelper {
     protected function getAssets() {
@@ -39,6 +40,12 @@ class IndexDataHelper extends BaseDataHelper {
             'title' => $channel->getEnglishName(),
             'cnTitle' => $channel->getChineseName(),
         );
+
+        $profile = (new ProfileService)->getProfile();
+        foreach ($profile as $k => $v) {
+            $result[$k] = $v;
+        }
+
         return $result;
     }
     

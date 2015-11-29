@@ -72,5 +72,9 @@ class UrlDataHelper {
     public function getUploadImageUrl() {
         return NFUtil::getUrl('/imageUpload');
     }
+    
+    public function getProfileUrl() {
+        return NFUtil::getUrl('/admin/profile');
+    }
 }
 ?>
