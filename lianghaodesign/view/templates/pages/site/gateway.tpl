@@ -8,11 +8,11 @@
       <object class="tm-hidden" src="{$image->getImageUrl()}" data-url="{$image->getChannelPageUrl()}"></object>
       {/foreach}
       <div id="realTitle" class="tm-hidden text background-stress">
-          <a class="page-link" href="{$workUrl}">
+          <a class="page-link" href="{$workUrl}" style="width:3.5em;">
             <span>Project</span><span class="tm-hidden">项目</span>
           </a>
           <span>X</span>
-          <a class="page-link" href="{$lifeUrl}">
+          <a class="page-link" href="{$lifeUrl}" style="width:2.5em;">
             <span>Life</span><span class="tm-hidden">生活</span>
           </a>
       </div>
