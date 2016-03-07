@@ -9,7 +9,7 @@
       {/foreach}
       <div id="realTitle" class="tm-hidden text background-stress">
           <a class="page-link" href="{$workUrl}">
-            <span>Work</span><span class="tm-hidden">工作</span>
+            <span>Project</span><span class="tm-hidden">项目</span>
           </a>
           <span>X</span>
           <a class="page-link" href="{$lifeUrl}">
