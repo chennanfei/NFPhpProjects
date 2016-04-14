@@ -53,8 +53,12 @@ class GatewayImage extends SiteImage {
         if (!isset($this->siteChannel)) {
             return null;
         }
-        
-        return NFUtil::getUrl('index/' . lcfirst($this->siteChannel->getEnglishName()));
+
+        $name = lcfirst($this->siteChannel->getEnglishName());
+        if ($name == 'project') {
+            return NFUtil::getUrl('index/work');
+        }
+        return NFUtil::getUrl('index/' . $name);
     }
 }
 ?>
